@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.scss';
+import Home from './features/home/Home';
 import api from './helpers/network/api';
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
   }, []);
 
   return (
-    <h1>Nidesso Frontend</h1>
+    <Home></Home>
   );
 }
 
