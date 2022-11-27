@@ -6,7 +6,9 @@ function HomeLayout() {
     return (
         <Fragment>
             <NavBar></NavBar>
-            <Outlet></Outlet>
+            <div className="max-w-7xl mx-auto px-4 mt-3">
+                <Outlet></Outlet>
+            </div>
         </Fragment>
     );
 }

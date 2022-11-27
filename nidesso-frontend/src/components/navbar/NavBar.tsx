@@ -8,7 +8,7 @@ function NavBar() {
 
     return (
         <nav className="bg-gray-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
                         <div className="flex-shrink-0">
@@ -17,14 +17,15 @@ function NavBar() {
                                 alt="Workflow"
                             />
                         </div>
+                        <span className="text-2xl font-bold text-white px-3 py-2">Nidesso</span>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <NavLink to='/'
-                                    className={({isActive}) => `hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Home</NavLink>
+                                    className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-300 font-medium'}`}>Home</NavLink>
                                 <NavLink to='about-us'
-                                    className={({isActive}) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Über uns</NavLink>
+                                    className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-300 font-medium'}`}>Über uns</NavLink>
                                 <NavLink to='login'
-                                    className={({isActive}) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Login</NavLink>
+                                    className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-300 font-medium'}`}>Login</NavLink>
                             </div>
                         </div>
                     </div>
@@ -88,11 +89,11 @@ function NavBar() {
                     <div className="md:hidden" id="mobile-menu">
                         <div ref={React.createRef()} className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             <NavLink to='/'
-                                className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium">Home</NavLink>
-                            <NavLink to='/about-us'
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Über uns</NavLink>
-                            <NavLink to='/login'
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</NavLink>
+                                className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Home</NavLink>
+                            <NavLink to='about-us'
+                                className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Über uns</NavLink>
+                            <NavLink to='login'
+                                className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Login</NavLink>
                         </div>
                     </div>
                 )}
