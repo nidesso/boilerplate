@@ -3,29 +3,29 @@ import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-function NavBar() {
+function NavBar(props: {className?: string}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="bg-gray-800">
+        <nav className={`bg-th-primary-900 ${props.className ? props.className : ''}`}>
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
                         <div className="flex-shrink-0">
-                            <img className="h-8 w-8"
-                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                            <img className="h-16 w-16 -ml-3"
+                                src={process.env.PUBLIC_URL + '/logo_fox.png'}
                                 alt="Workflow"
                             />
                         </div>
-                        <span className="text-2xl font-bold text-white px-3 py-2">Nidesso</span>
+                        <span className="text-2xl font-bold text-white">Nidesso</span>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <NavLink to='/'
-                                    className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-300 font-medium'}`}>Home</NavLink>
+                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Home</NavLink>
                                 <NavLink to='about-us'
-                                    className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-300 font-medium'}`}>Über uns</NavLink>
+                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Über uns</NavLink>
                                 <NavLink to='login'
-                                    className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-300 font-medium'}`}>Login</NavLink>
+                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Login</NavLink>
                             </div>
                         </div>
                     </div>
@@ -89,11 +89,11 @@ function NavBar() {
                     <div className="md:hidden" id="mobile-menu">
                         <div ref={React.createRef()} className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             <NavLink to='/'
-                                className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Home</NavLink>
+                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Home</NavLink>
                             <NavLink to='about-us'
-                                className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Über uns</NavLink>
+                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Über uns</NavLink>
                             <NavLink to='login'
-                                className={({ isActive }) => `hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>Login</NavLink>
+                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Login</NavLink>
                         </div>
                     </div>
                 )}
