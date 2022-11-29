@@ -7,7 +7,7 @@ function HomeLayout() {
     return (
         <Fragment>
             <NavBar className="sticky top-0 z-50"></NavBar>
-            <main className="max-w-7xl mx-auto px-4 mt-3 h-full min-h-[100vh]">
+            <main className="max-w-7xl mx-auto px-4 mt-3 min-h-[100vh]">
                 <Outlet></Outlet>
             </main>
             <Footer></Footer>

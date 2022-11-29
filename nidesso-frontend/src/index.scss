@@ -33,6 +33,9 @@
   --accent-700: theme('colors.blue.700');
   --accent-800: theme('colors.blue.800');
   --accent-900: theme('colors.blue.900');
+
+  --viewportWidth: calc(100vw - var(--scrollbarWidth));
+  --viewportWidth50: calc(var(--viewportWidth) / 2);
 }
 
 .th-blue {

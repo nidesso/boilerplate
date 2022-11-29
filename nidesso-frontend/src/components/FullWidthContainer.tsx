@@ -1,6 +1,6 @@
 function FullWidthContainer(props: { children: JSX.Element, className?: string }) {
     return (
-        <div className={`w-[100vw] relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] ${props.className ?? ''}`}>
+        <div className={`w-[var(--viewportWidth)] relative left-1/2 right-1/2 -mx-[var(--viewportWidth50)] ${props.className ?? ''}`}>
             {props.children}
         </div>
     );
