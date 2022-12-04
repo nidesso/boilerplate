@@ -23,19 +23,21 @@
   --secondary-700: theme('colors.dark_sky_blue.700');
   --secondary-800: theme('colors.dark_sky_blue.800');
   --secondary-900: theme('colors.dark_sky_blue.900');
-  --accent-50: theme('colors.blue.50');
-  --accent-100: theme('colors.blue.100');
-  --accent-200: theme('colors.blue.200');
-  --accent-300: theme('colors.blue.300');
-  --accent-400: theme('colors.blue.400');
-  --accent-500: theme('colors.blue.500');
-  --accent-600: theme('colors.blue.600');
-  --accent-700: theme('colors.blue.700');
-  --accent-800: theme('colors.blue.800');
-  --accent-900: theme('colors.blue.900');
+  --accent-50: theme('colors.orange.50');
+  --accent-100: theme('colors.orange.100');
+  --accent-200: theme('colors.orange.200');
+  --accent-300: theme('colors.orange.300');
+  --accent-400: theme('colors.orange.400');
+  --accent-500: theme('colors.orange.500');
+  --accent-600: theme('colors.orange.600');
+  --accent-700: theme('colors.orange.700');
+  --accent-800: theme('colors.orange.800');
+  --accent-900: theme('colors.orange.900');
 
   --viewportWidth: calc(100vw - var(--scrollbarWidth));
   --viewportWidth50: calc(var(--viewportWidth) / 2);
+
+  scroll-behavior: smooth;
 }
 
 .th-blue {

@@ -10,7 +10,7 @@ function HomeLayout() {
             <main className="max-w-7xl mx-auto px-4 mt-3 min-h-[100vh]">
                 <Outlet></Outlet>
             </main>
-            <Footer></Footer>
+            <Footer className="mt-4"></Footer>
         </Fragment>
     );
 }
