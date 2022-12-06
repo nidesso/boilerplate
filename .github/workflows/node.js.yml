@@ -37,6 +37,7 @@ jobs:
       working-directory: ./nidesso-frontend
       
     - run: |
+           cd ..
            mkdir tmp
 
            cp build/index.html build/404.html
