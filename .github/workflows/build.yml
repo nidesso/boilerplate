@@ -1,0 +1,55 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    
+    steps:
+        - uses: actions/checkout@v3
+        - name: Node LTS versions
+          uses: msimerson/node-lts-versions@v1.1.1
+        - name: Use Node.js $
+          uses: actions/setup-node@v3
+          env:
+            FORCE_COLOR: 0
+          with:
+            node-version: $
+            cache: 'npm'
+
+        - name: Build
+          run: |
+            cd nidesso-frontend
+            npm i
+            npm run build
+
+            mkdir tmp
+            
+            cp build/index.html build/404.html
+            cp -r build/* ./tmp
+          
+            git pull --all
+            git checkout -f build/gh-page
+            git branch
+            
+            rm -r $( printf '%s\n' * | grep -Ewv ".git|tmp" )
+            
+            mv tmp/* ./
+            rm -r tmp 
+
+            touch CNAME
+            echo "www.nidesso.ch" >> CNAME
+            
+            git config --global user.email "build@nidesso.ch"
+            git config --global user.name "Build Job"
+            git add .
+            git commit -m "build by github action" --allow-empty
+            git push
