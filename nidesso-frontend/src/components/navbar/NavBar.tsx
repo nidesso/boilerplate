@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-function NavBar(props: {className?: string}) {
+function NavBar(props: { className?: string }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -24,8 +24,10 @@ function NavBar(props: {className?: string}) {
                                     className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Home</NavLink>
                                 <NavLink to='about-us'
                                     className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Über uns</NavLink>
-                                <NavLink to='login'
-                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Login</NavLink>
+                                {!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ?
+                                    <NavLink to='login'
+                                        className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Login</NavLink> :
+                                    null}
                             </div>
                         </div>
                     </div>
@@ -33,7 +35,7 @@ function NavBar(props: {className?: string}) {
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             type="button"
-                            className="bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                            className="bg-th-primary-900 inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-th-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-400 focus:ring-white"
                             aria-controls="mobile-menu"
                             aria-expanded="false"
                         >
