@@ -39,7 +39,7 @@ jobs:
     - run: |
            mkdir tmp
 
-           cp nidesso-frontend/build/index.html /nidesso-frontend//build/404.html
+           cp nidesso-frontend/build/index.html /nidesso-frontend/build/404.html
            cp -r nidesso-frontend/build/* ./tmp
 
            git pull --all
