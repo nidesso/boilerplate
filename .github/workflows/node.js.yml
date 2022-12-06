@@ -29,7 +29,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: "./nidesso-frontend/package-lock.json"
-
+        
+    - run: npm i
+      working-directory: ./nidesso-frontend
         
     - run: npm run build
       working-directory: ./nidesso-frontend
