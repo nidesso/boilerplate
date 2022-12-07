@@ -91,11 +91,13 @@ function NavBar(props: { className?: string }) {
                     <div className="md:hidden" id="mobile-menu">
                         <div ref={React.createRef()} className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             <NavLink to='/'
-                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Home</NavLink>
+                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Home</NavLink>
                             <NavLink to='about-us'
-                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Über uns</NavLink>
-                            <NavLink to='login'
-                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Login</NavLink>
+                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Über uns</NavLink>
+                            {!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ?
+                                <NavLink to='login'
+                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Login</NavLink> :
+                                null}
                         </div>
                     </div>
                 )}
