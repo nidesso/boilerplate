@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import FullWidthContainer from "../../components/FullWidthContainer";
+import Button from "../../components/ui-lib/Button";
 
 function Home() {
-
   const schoolList = [
     "Managen der Ausfälle über den online Vertretungsplan",
     "Jederzeit einen Überblick über alle Vertretungsstellen",
@@ -40,10 +40,11 @@ function Home() {
               </li>
             ))}
           </ul>
-          <button className="bg-th-primary-900 py-2 px-5 mt-auto rounded-full text-white hover:bg-th-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-white"
-            onClick={_ => jumpTo("schools")}>
+          <Button className="mt-auto"
+            theme="primary"
+            onClick={() => jumpTo("schools")}>
             Nidesso für Schulen
-          </button>
+          </Button>
         </div>
         <div className="bg-th-accent-200 p-4 grid grid-cols-1 rounded-md">
           <ul className="mb-4">
@@ -54,10 +55,11 @@ function Home() {
               </li>
             ))}
           </ul>
-          <button className="bg-th-accent-900 py-2 px-5 mt-auto rounded-full text-white hover:bg-th-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-white"
-            onClick={_ => jumpTo("teachers")}>
+          <Button className="mt-auto"
+            theme="accent"
+            onClick={() => jumpTo("teachers")}>
             Nidesso für Lehrpersonen
-          </button>
+          </Button>
         </div>
       </section>
       <hr className="my-3 xl:-mx-5" />

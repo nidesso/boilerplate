@@ -9,6 +9,7 @@ function NavBar(props: { className?: string, navItems: NavItem[] }) {
 
     const renderNavItems = (items: NavItem[]) => items.map(navItem => (navItem.show ?
         <NavLink to={navItem.link}
+            key={navItem.name}
             className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>{navItem.name}</NavLink>
         : null
     ))

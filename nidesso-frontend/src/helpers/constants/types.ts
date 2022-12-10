@@ -1,0 +1,1 @@
+export type ComponentColor = 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error';
