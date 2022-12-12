@@ -8,7 +8,8 @@ function Playground() {
         'Item 3',
         'Item 4',
         'Item 5',
-    ]
+    ];
+    console.log(elements);
     return (
         <div>
             <h1 className="text-3xl font-bold my-4">Buttons</h1>
