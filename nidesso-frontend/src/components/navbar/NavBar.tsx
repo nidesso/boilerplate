@@ -2,32 +2,35 @@ import { Transition } from "@headlessui/react";
 import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { NavItem } from "../../models/interfaces/nav-item";
 
-function NavBar(props: { className?: string }) {
+function NavBar(props: { className?: string, navItems: NavItem[] }) {
     const [isOpen, setIsOpen] = useState(false);
 
+    const renderNavItems = (items: NavItem[]) => items.map(navItem => (navItem.show ?
+        <NavLink to={navItem.link}
+            key={navItem.name}
+            className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>{navItem.name}</NavLink>
+        : null
+    ))
+
     return (
-        <nav className={`bg-th-primary-900 ${props.className ? props.className : ''}`}>
+        <nav className={`bg-th-primary-900 ${props.className ?? ''}`}>
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
-                        <div className="flex-shrink-0">
-                            <img className="h-16 w-16 -ml-3"
-                                src={process.env.PUBLIC_URL + '/logo_fox.png'}
-                                alt="Workflow"
-                            />
-                        </div>
-                        <span className="text-2xl font-bold text-white">Nidesso</span>
+                        <NavLink to='/'>
+                            <div className="flex-shrink-0 flex-row flex items-center">
+                                <img className="h-16 w-16 -ml-3"
+                                    src={process.env.PUBLIC_URL + '/logo_fox.png'}
+                                    alt="Workflow"
+                                />
+                                <span className="text-2xl font-bold text-white ml-2">Nidesso</span>
+                            </div>
+                        </NavLink>
                         <div className="hidden md:block">
-                            <div className="ml-10 flex items-baseline space-x-4">
-                                <NavLink to='/'
-                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Home</NavLink>
-                                <NavLink to='about-us'
-                                    className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Über uns</NavLink>
-                                {!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ?
-                                    <NavLink to='login'
-                                        className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm ${isActive ? 'text-white font-bold' : 'text-gray-100 font-medium'}`}>Login</NavLink> :
-                                    null}
+                            <div className="ml-6 flex items-baseline space-x-4">
+                                {renderNavItems(props.navItems)}
                             </div>
                         </div>
                     </div>
@@ -90,12 +93,7 @@ function NavBar(props: { className?: string }) {
                 {() => (
                     <div className="md:hidden" id="mobile-menu">
                         <div ref={React.createRef()} className="flex flex-col px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            <NavLink to='/'
-                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Home</NavLink>
-                            <NavLink to='about-us'
-                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Über uns</NavLink>
-                            <NavLink to='login'
-                                className={({ isActive }) => `hover:bg-th-primary-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'text-white' : 'text-gray-100'}`}>Login</NavLink>
+                            {renderNavItems(props.navItems)}
                         </div>
                     </div>
                 )}
