@@ -21,9 +21,9 @@ data class Teacher(
 
 @Entity
 data class Vacancy(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
     @ManyToOne var school: School,
-    @ManyToMany val teachers: MutableSet<Teacher> = mutableSetOf()
+    @ManyToMany val teachers: MutableSet<Teacher> = mutableSetOf(),
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
 )
 
 
@@ -38,15 +38,17 @@ class VacancyService(
     val teacherRepository: TeacherRepository
 ) {
 
-    fun add(vacancy: Vacancy) {
+    fun createVacancy(vacancy: Vacancy) {
         val school = schoolRepository.findById(vacancy.school.id!!).get()
         vacancy.school = school;
         vacancyRepository.save(vacancy);
     }
 
+
     fun addTeacher(id: Long, teacher: Teacher) {
         val teacherEntity = teacherRepository.findById(teacher.id!!).get();
         val vacancy = vacancyRepository.findById(id).get()
+
         vacancy.teachers.add(teacherEntity);
 
         vacancyRepository.save(vacancy);

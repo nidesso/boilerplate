@@ -1,38 +1,42 @@
 package ch.nidesso.matching
 
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
-
+import org.springframework.test.context.junit4.SpringRunner
 
 @DataJpaTest
-class DataPersistenceTest {
-    @Autowired
-    lateinit var entityManager: TestEntityManager
-
-    @Autowired lateinit var teacherRepository: TeacherRepository;
-    @Autowired lateinit var schoolRepository: SchoolRepository;
-    @Autowired lateinit var vacancyRepository: VacancyRepository;
-
+class DataPersistenceTest @Autowired constructor(
+    var entityManager: TestEntityManager,
+    var teacherRepository: TeacherRepository,
+    var schoolRepository: SchoolRepository,
+    var vacancyRepository: VacancyRepository,
+) {
 
 
     @Test
-    fun WhenFindById_thenReturnBankAccount() {
+    fun testEntity() {
+
         val school = School("name");
         val teacher = Teacher("lehrer 1")
 
 
+        schoolRepository.save(school)
+        teacherRepository.save(teacher)
 
-        entityManager.persist(school)
-        entityManager.persist(teacher)
-        entityManager.flush()
+        val schools = schoolRepository.findAll()
+        val teachers = teacherRepository.findAll()
 
 
+        val vacancy = Vacancy(school, mutableSetOf(teacher))
+        vacancyRepository.save(vacancy)
 
-        val ingBankAccountFound = schoolRepository.findById(school.id!!).get()
-        assertThat(ingBankAccountFound)
+
+        assertEquals(1, schools.size)
+        assertEquals(1, teachers.size)
+        assertEquals(1,vacancyRepository.findAll().size)
     }
 
 
