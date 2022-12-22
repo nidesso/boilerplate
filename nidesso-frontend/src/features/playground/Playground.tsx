@@ -3,7 +3,8 @@ import { ComponentStyles } from "../../helpers/constants/styles";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import ListBox from "../../components/ui-lib/ListBox";
-import Input from "../../components/ui-lib/Input";
+import { TestForm } from "./TestForm";
+import { Input } from "../../components/ui-lib/Input";
 
 const people = [
     { id: 1, name: 'Durward Reynolds', unavailable: false },
@@ -89,8 +90,7 @@ function Playground() {
             </div>
             <hr className="my-4 -mx-4"></hr>
             <h1 className="text-3xl font-bold my-4">Textbox</h1>
-            <Input type="text"
-                placeholder="Write your text here..."></Input>
+            <Input type="text" id="test" name="test" label="Test" placeholder="Write your text here..."></Input>
             <hr className="my-4 -mx-4"></hr>
             <h1 className="text-3xl font-bold my-4">Listbox</h1>
             <div className="w-72">
@@ -105,6 +105,7 @@ function Playground() {
             </div>
             <hr className="my-4 -mx-4"></hr>
             <h1 className="text-3xl font-bold my-4">Form</h1>
+            <TestForm></TestForm>
         </div>
     );
 }

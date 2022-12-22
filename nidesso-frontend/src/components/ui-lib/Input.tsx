@@ -1,20 +1,65 @@
-import classNames from "classnames";
+import {
+    forwardRef,
+    DetailedHTMLProps,
+    InputHTMLAttributes
+} from 'react';
+import classNames from 'classnames';
 
-interface InputProps {
-    type?: string;
+export type InputType = 'text' | 'email' | 'password';
+
+export type InputProps = {
+    id: string;
+    name: string;
+    label: string;
+    type?: InputType;
     className?: string;
-    placeholder?: string;
-}
+} & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-function Input(props: InputProps) {
-    return (
-        <input type={props.type ?? 'text'}
-            className={classNames(
-                "bg-white border-solid border-gray-100 border px-4 py-2 rounded-lg relative w-full focus:outline-none focus:ring-2 focus:ring-th-primary-100",
-                props.className
-            )}
-            placeholder={props.placeholder}></input>
-    )
-}
-
-export default Input;
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+    (
+        {
+            id,
+            name,
+            label,
+            type = 'text',
+            className = '',
+            placeholder,
+            ...props
+        },
+        ref
+    ) => {
+        return (
+            <input
+                id={id}
+                ref={ref}
+                name={name}
+                type={type}
+                aria-label={label}
+                placeholder={placeholder}
+                className={classNames(
+                    `relative
+                    border
+                    border-gray-100
+                    hover:border-th-primary-400
+                    focus:outline-none 
+                    focus:border-th-primary-100 
+                    inline-flex 
+                    w-full
+                    px-4 py-2 
+                    rounded-lg
+                    leading-none 
+                    transition-colors 
+                    ease-in-out
+                    placeholder-gray-500
+                    text-gray-900
+                    bg-white
+                    focus:ring-th-primary-100 
+                    focus:ring-2
+                    focus:ring-opacity-30`,
+                    className)
+                }
+                {...props}
+            />
+        );
+    }
+);
