@@ -1,6 +1,6 @@
-import { Input, InputProps } from "./Input";
+import { Input, InputProps } from "../Input";
 import { DeepMap, FieldError, FieldPath, RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { getValue } from "../../helpers/utils/array.util";
+import { getValue } from "../../../helpers/utils/array.util";
 import { ErrorMessage } from "@hookform/error-message";
 import classNames from "classnames";
 

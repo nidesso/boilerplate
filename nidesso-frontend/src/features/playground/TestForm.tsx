@@ -1,15 +1,23 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
-import { FormInput } from "../../components/ui-lib/FormInput";
+import { FormInput } from "../../components/ui-lib/form/FormInput";
+import FormListBox from "../../components/ui-lib/form/FormListBox";
 import { ComponentStyles } from "../../helpers/constants/styles";
 
 export type TestFormFields = {
     firstName: string;
+    gender: string;
     password: string;
 };
 
+const genders = [
+    'Male',
+    'Female'
+]
+
 export const TestForm = () => {
     const {
+        control,
         register,
         handleSubmit,
         formState: { errors },
@@ -17,6 +25,7 @@ export const TestForm = () => {
 
     const onSubmit = handleSubmit((data) => {
         console.log('submitting...');
+        console.log(data);
     });
 
     return (
@@ -33,6 +42,16 @@ export const TestForm = () => {
                 }}
                 errors={errors}
             />
+            <FormListBox
+                name="gender"
+                control={control}
+                values={genders}
+                rules={{
+                    required: 'You must select a value.'
+                }}
+                itemDisabled={(_) => false}
+                errors={errors}
+                className="mt-2"></FormListBox>
             <FormInput
                 id="password"
                 type="password"

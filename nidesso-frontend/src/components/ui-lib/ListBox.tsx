@@ -1,8 +1,9 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, Key, ReactNode } from "react";
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import classNames from "classnames";
 
-class ListBoxProps<T> {
+export class ListBoxProps<T> {
     className?: string;
     value?: T;
     valueChanged?: (value: T) => void;
@@ -16,9 +17,10 @@ class ListBoxProps<T> {
 
 function ListBox<T>(props: ListBoxProps<T>) {
     return (
-        <Listbox as="div" className="w-full relative" value={props.value} onChange={props.valueChanged}>
+        <Listbox as="div" className={classNames("w-full relative", props.className)} value={props.value} onChange={props.valueChanged}>
             <Listbox.Button className="bg-white border-solid border-gray-100 border px-4 py-2 rounded-lg relative w-full">
-                <span className="block truncate mr-4 text-gray-900 text-start">{(props.valueKey ? props.valueKey(props.value!) : props.value) as ReactNode}</span>
+                {props.value && <span className="block truncate mr-4 text-gray-900 text-start">{(props.valueKey ? props.valueKey(props.value) : props.value) as ReactNode}</span>}
+                {!props.value && <span className="block truncate mr-4 text-gray-500 text-start">Wert selektieren</span>}
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronUpDownIcon
                         className="h-5 w-5 text-gray-400"
