@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1 {
+    @apply text-3xl text-gray-900;
+  }
+  h2 {
+    @apply text-2xl text-gray-900;
+  }
+  h3 {
+    @apply text-xl text-gray-900;
+  }
+}
+
 :root {
   --primary-50: theme('colors.green.50');
   --primary-100: theme('colors.green.100');
