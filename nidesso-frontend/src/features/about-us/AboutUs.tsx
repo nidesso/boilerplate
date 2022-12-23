@@ -33,9 +33,9 @@ function AboutUs() {
 
       {
         members.map(m =>
-          <Fragment>
+          <Fragment key={m.name}>
             <FullWidthContainer className="bg-th-secondary-300 my-6">
-              <div key={m.name} className="md:flex max-w-7xl mx-auto px-4 py-4">
+              <div className="md:flex max-w-7xl mx-auto px-4 py-4">
                 <div className="mx-6">
                   <img className="rounded-full border-2 border-s border-th-secondary-500 h-40 w-40 mx-auto object-cover"
                     src={m.imgUrl}

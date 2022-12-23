@@ -32,7 +32,7 @@ function Playground() {
     return (
         <div>
             <h1 className="my-4">Buttons</h1>
-            <div className="grid grid-cols-6 gap-2">
+            <div className="grid md:grid-cols-3 lg:grid-cols-6 grid-cols-1 gap-2">
                 <Button theme="primary">Primary</Button>
                 <Button theme="secondary">Secondary</Button>
                 <Button theme="accent">Accent</Button>
