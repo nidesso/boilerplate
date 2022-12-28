@@ -1,9 +1,19 @@
 # matching-service
-## How to build
+## Commands
 
+
+build app
 ```
 mvn clean install
 ```
+
+start app 
+```
+mvn spring-boot:run
+```
+
+
+
 
 # Rest
 [swagger-ui](http://localhost:8080/swagger-ui/index.html)
