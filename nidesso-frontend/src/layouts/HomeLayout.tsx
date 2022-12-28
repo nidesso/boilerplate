@@ -14,7 +14,7 @@ function HomeLayout() {
 
     return (
         <Fragment>
-            <NavBar className="sticky top-0 z-50" navItems={navItems}></NavBar>
+            <NavBar className="sticky top-0 z-10" navItems={navItems}></NavBar>
             <main className="max-w-7xl mx-auto px-4 mt-3 min-h-[100vh]">
                 <Outlet></Outlet>
             </main>

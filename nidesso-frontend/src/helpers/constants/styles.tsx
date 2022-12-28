@@ -1,4 +1,4 @@
-const baseButtonStyle = 'rounded-full px-5 py-2';
+const baseButtonStyle = 'rounded-lg px-5 py-2';
 
 export const ComponentStyles = {
     'primary': baseButtonStyle + ' bg-th-primary-900 text-white hover:bg-th-primary-800 focus:outline-none focus:ring-2 focus:ring-th-primary-200',
