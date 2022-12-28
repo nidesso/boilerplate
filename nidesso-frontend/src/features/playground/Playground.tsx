@@ -6,6 +6,7 @@ import ListBox from "../../components/ui-lib/ListBox";
 import { TestForm } from "./TestForm";
 import { Input } from "../../components/ui-lib/Input";
 import UiDialog from "../../components/ui-lib/UiDialog";
+import api from "../../helpers/network/api";
 
 const people = [
     { id: 1, name: 'Durward Reynolds', unavailable: false },
@@ -28,6 +29,7 @@ function Playground() {
 
     const [selectedPerson, setSelectedPerson] = useState(people[0])
     const [isOpen, setIsOpen] = useState(false)
+    const [fact, setFact] = useState<string>('');
 
     return (
         <div>
@@ -121,6 +123,19 @@ function Playground() {
                     <Button className="mt-4" theme="primary" onClick={() => setIsOpen(false)}>Close</Button>
                 </>
             </UiDialog>
+            <hr className="my-4 -mx-4"></hr>
+            <h1 className="my-4">API</h1>
+            <Button theme="primary" className="mr-4" onClick={() => {
+                api.fact()
+                    .then(r => setFact(r.data.fact))
+                    .catch(console.log);
+            }}>Call Cat Api</Button>
+            <Button theme="primary" className="" onClick={() => {
+                api.getVacancies()
+                    .then(console.log)
+                    .catch(console.log);
+            }}>Call Api</Button>
+            {fact && <div>{fact}</div>}
         </div>
     );
 }

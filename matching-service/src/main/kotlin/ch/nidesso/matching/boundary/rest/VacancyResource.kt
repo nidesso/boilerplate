@@ -7,6 +7,7 @@ import ch.nidesso.matching.service.VacancyService
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin
 class VacancyResource(
     val repository: VacancyRepository,
     val vacancyService: VacancyService
