@@ -20,8 +20,7 @@ class VacancyService(
     fun addTeacher(id: Long, teacher: Teacher) {
         val teacherEntity = teacherRepository.findById(teacher.id!!).get();
         val vacancy = vacancyRepository.findById(id).get()
-
-        vacancy.teachers.add(teacherEntity);
+        vacancy.addTeacher(teacherEntity)
 
         vacancyRepository.save(vacancy);
     }
