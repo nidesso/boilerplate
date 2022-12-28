@@ -14,7 +14,4 @@ data class Vacancy(
         this.teachers.add(teacher);
     }
 
-    fun removeTeacher(teacher: Teacher) {
-        this.teachers.remove(teacher);
-    }
 }

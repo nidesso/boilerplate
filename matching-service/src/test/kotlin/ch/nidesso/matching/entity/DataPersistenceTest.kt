@@ -36,6 +36,4 @@ class DataPersistenceTest @Autowired constructor(
         assertEquals(1, teachers.size)
         assertEquals(1,vacancyRepository.findAll().size)
     }
-
-
 }
