@@ -1,7 +1,23 @@
+# matching-service
+## Commands
+
+
+build app
+```
+mvn clean install
+```
+
+start app 
+```
+mvn spring-boot:run
+```
+
+
+
+
 # Rest
+[swagger-ui](http://localhost:8080/swagger-ui/index.html)
 
+## helpfully links
 
-
-
-1) POST /vacancy/      {school: 1, description: "test"}     neue Vakanz erstellen   
-2) PUT /vacancy/1/     {teacherID: 123}                     Lehrer bewirbt sich (teacherId wird später mit token im http header gemacht)
+https://www.baeldung.com/hibernate-lazy-loading-workaround
