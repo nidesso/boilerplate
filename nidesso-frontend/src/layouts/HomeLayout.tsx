@@ -8,6 +8,7 @@ function HomeLayout() {
     const navItems: NavItem[] = [
         NavItem.create('Home', '/'),
         NavItem.create('Team', '/about-us'),
+        NavItem.create('Schule', '/school', !process.env.NODE_ENV || process.env.NODE_ENV === 'development'),
         NavItem.create('Login', '/login', !process.env.NODE_ENV || process.env.NODE_ENV === 'development'),
         NavItem.create('Playground', '/playground', !process.env.NODE_ENV || process.env.NODE_ENV === 'development')
     ]

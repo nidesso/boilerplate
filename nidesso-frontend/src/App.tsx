@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import './App.scss';
 import appRouter from './components/router/AppRouter';
-import api from './helpers/network/api';
 import useResizeObserver from './helpers/useResizeObserver';
 
 function App() {
   const size = useResizeObserver(window.document.body);
 
   useEffect(() => {
-    api.test();
+    // api.test();
   }, []);
 
   useEffect(() => {
