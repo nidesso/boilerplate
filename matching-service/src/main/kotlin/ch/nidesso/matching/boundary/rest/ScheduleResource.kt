@@ -13,7 +13,6 @@ class ScheduleResource(
         @PathVariable schoolId: Long,
     ) = listOf(ScheduleDTO(listOf(), listOf()))
 
-
     @GetMapping("/schedule/{id}")
     fun findAll(
         @PathVariable id: Long,

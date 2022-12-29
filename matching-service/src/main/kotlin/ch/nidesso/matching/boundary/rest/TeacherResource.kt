@@ -1,29 +1,25 @@
 package ch.nidesso.matching.boundary.rest
 
-import ch.nidesso.matching.entity.Teacher
+import ch.nidesso.matching.dto.AddressDTO
+import ch.nidesso.matching.dto.TeacherDTO
 import ch.nidesso.matching.entity.TeacherRepository
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.HttpClientErrorException.NotFound
-import org.webjars.NotFoundException
-import java.util.NoSuchElementException
 
 
 @RestController
-class TeacherResource(val repository: TeacherRepository) {
+class TeacherResource(
+    val repository: TeacherRepository
+) {
     @GetMapping("/teacher")
-    fun findAll() = repository.findAll()
+    fun findAll() = listOf(TeacherDTO(1, "", "", AddressDTO("", "", 1)))
 
-    @GetMapping("/school/{teacherID}")
-    fun findByID(@PathVariable teacherID: Long) = repository.findById(teacherID);
 
     @PostMapping("/teacher")
-    fun add(@RequestBody item: Teacher) = repository.save(item);
+    fun add(@RequestBody item: TeacherDTO) = {};
 
     @PutMapping("/teacher/")
-    fun update(@RequestBody item: Teacher) =
-        if (repository.existsById(item.id!!)) repository.save(item)
-        else throw NoSuchElementException()
+    fun update(@RequestBody item: TeacherDTO) = {}
 
     @DeleteMapping("/teacher")
-    fun delete(@RequestBody item: Teacher) = repository.delete(item);
+    fun delete(@RequestBody item: TeacherDTO) = {}
 }
