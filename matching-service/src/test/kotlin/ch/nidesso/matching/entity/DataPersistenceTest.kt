@@ -1,11 +1,10 @@
 package ch.nidesso.matching.entity
 
-import ch.nidesso.matching.entity.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
+
 @DataJpaTest
 class DataPersistenceTest @Autowired constructor(
     var teacherRepository: TeacherRepository,
@@ -17,19 +16,19 @@ class DataPersistenceTest @Autowired constructor(
     @Test
     fun testEntity() {
 
-        val school = School("name");
-        val teacher = Teacher("lehrer 1")
+        val schoolEntity = School("name");
+        val teacherEntity = Teacher("lehrer 1")
 
 
-        schoolRepository.save(school)
-        teacherRepository.save(teacher)
+        schoolRepository.save(schoolEntity)
+        teacherRepository.save(teacherEntity)
 
         val schools = schoolRepository.findAll()
         val teachers = teacherRepository.findAll()
 
 
-        val vacancy = Vacancy(school, mutableSetOf(teacher))
-        vacancyRepository.save(vacancy)
+        val vacancyEntity = Vacancy(schoolEntity, mutableSetOf(teacherEntity))
+        vacancyRepository.save(vacancyEntity)
 
 
         assertEquals(1, schools.size)
