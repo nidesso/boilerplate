@@ -5,6 +5,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateAreas: {
+        '3-Col-Acc': [
+          'item item item',
+          'desc desc desc'
+        ],
+        '2-Col-Acc': [
+          'item item',
+          'desc desc'
+        ]
+      },
       colors: {
         dark_sky_blue: {
           '50': '#ffffff',
@@ -105,5 +115,7 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: [
+    require('@savvywombat/tailwindcss-grid-areas')
+  ],
 }

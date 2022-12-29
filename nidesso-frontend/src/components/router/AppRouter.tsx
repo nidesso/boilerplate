@@ -5,6 +5,7 @@ import Register from "../../features/authentication/register/Register";
 import Home from "../../features/home/Home";
 import Playground from "../../features/playground/Playground";
 import School from "../../features/school/School";
+import Teacher from "../../features/teacher/Teacher";
 import HomeLayout from "../../layouts/HomeLayout";
 import NoNavLayout from "../../layouts/NoNavLayout";
 
@@ -15,6 +16,7 @@ const appRouter = createBrowserRouter(
                 <Route path='/' element={<Home />}></Route>
                 <Route path='/about-us' element={<AboutUs />}></Route>
                 <Route path='/school' element={<School />} />
+                <Route path='/teacher' element={<Teacher />} />
                 <Route path='/playground' element={<Playground />}></Route>
             </Route>
             <Route element={<NoNavLayout />}>

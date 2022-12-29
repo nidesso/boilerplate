@@ -4,28 +4,22 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
-import VacancyCard from "./VacancyCard";
-import VacancyForm, { VacancyFormFields } from "./VacancyForm";
+import VacancyCard from "../school/VacancyCard";
+import { VacancyFormFields } from "../school/VacancyForm";
 
-function School() {
+function Teacher() {
     const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
     const [vacancies, setVacancies] = useState<VacancyFormFields[]>([]);
 
     useEffect(() => {
         api.getVacancies()
             .then(data => setVacancies(data))
-    }, [])
-
-    const onSubmit = (data: VacancyFormFields) => {
-        api.createVacancy(data)
-            .then(() => setDialogState({ isOpen: false }));
-    }
+    }, []);
 
     return (
         <>
-            <header className="flex md:justify-between flex-col md:flex-row">
+            <header>
                 <h1 className="mb-2 md:mb-0">Meine Ausschreibungen</h1>
-                <Button className="mb-2 md:mb-0" onClick={() => setDialogState({ isOpen: true })}>Erstellen</Button>
             </header>
             <main>
                 <section className="mb-4">
@@ -33,32 +27,28 @@ function School() {
                 </section>
                 <section>
                     <FullWidthContainer className="bg-th-primary-200 p-4">
-                        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 grid-cols-1 gap-4">
-                            {
-                                vacancies.map(v => (
+                        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-4">
+                            {(
+                                vacancies.map((v) => (
                                     <VacancyCard key={v.title} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
                                 ))
-                            }
+                            )}
                         </div>
                     </FullWidthContainer>
                 </section>
             </main>
             <UiDialog open={dialogState.isOpen} onClose={() => setDialogState({ isOpen: false })}>
                 <>
-                    <Dialog.Title as="h3">Neue Ausschreibung</Dialog.Title>
+                    <Dialog.Title as="h3">{dialogState.vacancy?.title}</Dialog.Title>
                     <Dialog.Description className="text-gray-800 my-2">
-                        Informationen ausfüllen um eine neue Ausschreibung zu erstellen
+                        {dialogState.vacancy?.description}
                     </Dialog.Description>
-                    <VacancyForm
-                        onSubmit={onSubmit}
-                        vacancy={dialogState.vacancy}
-                        actions={[
-                            <Button key='cancel' theme="secondary" className="ml-2" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
-                        ]}></VacancyForm>
+                    <Button className="mt-4 mr-2">Bewerben</Button>
+                    <Button theme="secondary" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
                 </>
             </UiDialog>
         </>
-    );
+    )
 }
 
-export default School;
+export default Teacher;
