@@ -10,6 +10,9 @@ class SchoolResource(val repository: SchoolRepository) {
     @GetMapping("/school")
     fun findAll() = repository.findAll()
 
+    @GetMapping("/school/{schoolId}")
+    fun findByID(@PathVariable schoolId: Long) = repository.findById(schoolId);
+
     @PostMapping("/school")
     fun add(@RequestBody item: School) = repository.save(item);
 

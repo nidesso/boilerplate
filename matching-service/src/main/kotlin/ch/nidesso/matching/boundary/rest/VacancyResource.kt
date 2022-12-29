@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class VacancyResource(
-    val repository: VacancyRepository,
+    val vacancyRepository: VacancyRepository,
     val vacancyService: VacancyService
 ) {
 
     @GetMapping("/vacancy")
-    fun findAll() = repository.findAll()
+    fun findAll() = vacancyRepository.findAll()
 
     @PostMapping("/vacancy")
     fun create(@RequestBody item: Vacancy) = vacancyService.createVacancy(item);

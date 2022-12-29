@@ -10,6 +10,7 @@ class VacancyService(
     val teacherRepository: TeacherRepository
 ) {
 
+
     fun createVacancy(vacancy: Vacancy) {
         val school = schoolRepository.findById(vacancy.school.id!!).get()
         vacancy.school = school;
@@ -19,10 +20,12 @@ class VacancyService(
 
     fun addTeacher(id: Long, teacher: Teacher) {
         val teacherEntity = teacherRepository.findById(teacher.id!!).get();
+
         val vacancy = vacancyRepository.findById(id).get()
         vacancy.addTeacher(teacherEntity)
 
         vacancyRepository.save(vacancy);
+
     }
 
 }
