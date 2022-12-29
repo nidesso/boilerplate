@@ -39,8 +39,6 @@ class VacancyServiceTest @Autowired constructor(
         assertEquals(1, vacancies[0].teachers.size)
         assertEquals(1, teachers[0].vacancies.size)
         assertEquals(1, teachers[0].vacancies.toList()[0].id)
-
-
     }
 
 
