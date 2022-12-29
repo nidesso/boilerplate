@@ -8,6 +8,10 @@ import jakarta.persistence.*
 
 @Entity
 data class Vacancy(
+
+
+
+
     @ManyToOne var school: School = School(),
 
     @ManyToMany val teachers: MutableSet<Teacher> = mutableSetOf(),

@@ -13,5 +13,8 @@ data class Teacher(
     @ManyToMany(mappedBy = "teachers")
     val vacancies: MutableCollection<Vacancy> = mutableSetOf(),
 
+    @ManyToOne
+    val address: Address = Address(),
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
 )

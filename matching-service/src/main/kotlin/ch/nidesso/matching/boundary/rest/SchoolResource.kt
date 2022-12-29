@@ -3,9 +3,9 @@ package ch.nidesso.matching.boundary.rest
 import ch.nidesso.matching.dto.AddressDTO
 import ch.nidesso.matching.dto.SchoolDTO
 import ch.nidesso.matching.dto.TeacherDTO
-import ch.nidesso.matching.entity.SchoolRepository
-import ch.nidesso.matching.entity.TeacherRepository
+import ch.nidesso.matching.service.SchoolRepository
 import ch.nidesso.matching.service.SchoolService
+import ch.nidesso.matching.service.TeacherRepository
 import org.springframework.web.bind.annotation.*
 
 @RestController

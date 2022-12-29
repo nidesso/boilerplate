@@ -1,18 +1,19 @@
 package ch.nidesso.matching.service
 
+import ch.nidesso.matching.entity.Teacher
 import ch.nidesso.matching.entity.Vacancy
 import org.springframework.stereotype.Service
 
 @Service
-class VacancyService(
+class TeacherService(
+    val addressRepository: AddressRepository,
     val vacancyRepository: VacancyRepository,
-    val schoolRepository: SchoolRepository,
     val teacherRepository: TeacherRepository
 ) {
 
-    fun createVacancy(vacancy: Vacancy) {
-        vacancy.school = schoolRepository.findById(vacancy.school.id!!).get();
-        vacancyRepository.save(vacancy);
+    fun save(teacher: Teacher) {
+        addressRepository.save(teacher.address);
+        teacherRepository.save(teacher);
     }
 
 

@@ -9,7 +9,6 @@ import ch.nidesso.matching.entity.Vacancy
 
 
 class Converter {
-
     fun toEntity(teacherDTO: TeacherDTO): Teacher {
         teacherDTO.let {
             return Teacher(
@@ -30,7 +29,6 @@ class Converter {
             )
         }
     }
-
 
     fun toEntity(vacancyDTO: VacancyDTO): Vacancy {
         vacancyDTO.let {
