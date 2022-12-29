@@ -2,8 +2,10 @@ package ch.nidesso.matching.service
 
 import ch.nidesso.matching.dto.SchoolDTO
 import ch.nidesso.matching.dto.TeacherDTO
+import ch.nidesso.matching.dto.VacancyDTO
 import ch.nidesso.matching.entity.School
 import ch.nidesso.matching.entity.Teacher
+import ch.nidesso.matching.entity.Vacancy
 
 
 class Converter {
@@ -25,6 +27,15 @@ class Converter {
             return School(
                 name = it.name,
                 id = it.id,
+            )
+        }
+    }
+
+
+    fun toEntity(vacancyDTO: VacancyDTO): Vacancy {
+        vacancyDTO.let {
+            return Vacancy(
+                id = it.vacancyId,
             )
         }
     }
