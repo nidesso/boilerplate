@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class VacancyServiceTest @Autowired constructor(
+class VacancyEntityServiceTest @Autowired constructor(
     var teacherRepository: TeacherRepository,
     var schoolRepository: SchoolRepository,
     var vacancyRepository: VacancyRepository,
@@ -22,9 +22,9 @@ class VacancyServiceTest @Autowired constructor(
 
         val school = schoolRepository.findAll()[0]
         val teacher = teacherRepository.findAll()[0]
-        val vacancy = Vacancy(school)
+        val vacancyEntity = Vacancy(school)
 
-        vacancyService.createVacancy(vacancy)
+        vacancyService.createVacancy(vacancyEntity)
 
         val id = vacancyRepository.findAll()[0].id!!
 

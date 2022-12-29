@@ -3,6 +3,7 @@ package ch.nidesso.matching.entity
 import jakarta.persistence.*
 
 
+
 @Entity
 data class School(
     var name: String = "",
