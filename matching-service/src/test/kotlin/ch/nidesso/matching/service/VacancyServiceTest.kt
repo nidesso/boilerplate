@@ -17,23 +17,28 @@ class VacancyServiceTest @Autowired constructor(
 
     @Test
     fun shouldCreateVacancy() {
-        val school = School("name");
-        val teacher = Teacher("lehrer 1")
+        schoolRepository.save(School("name"));
+        teacherRepository.save(Teacher("lehrer 1"))
 
-        schoolRepository.save(school);
-        teacherRepository.save(teacher)
+        val school = schoolRepository.findAll()[0]
+        val teacher = teacherRepository.findAll()[0]
 
         val vacancy = Vacancy(school)
         vacancyService.createVacancy(vacancy)
 
-        val id = vacancyRepository.findAll()[0].id
-        vacancyService.addTeacher(id!!, teacher)
+        val id = vacancyRepository.findAll()[0].id!!
 
 
-        val results2 = vacancyRepository.findAll()
+        vacancyService.addTeacher(id, teacher.id!!)
 
-        assertEquals(1, results2.size)
-        assertEquals(1, results2[0].teachers.size)
+        val vacancies = vacancyRepository.findAll()
+        val teachers = teacherRepository.findAll()
+
+        assertEquals(1, vacancies.size)
+
+        assertEquals(1, vacancies[0].teachers.size)
+        assertEquals(1, teachers[0].vacancies.size)
+        assertEquals(1, teachers[0].vacancies.toList()[0].id)
 
 
     }

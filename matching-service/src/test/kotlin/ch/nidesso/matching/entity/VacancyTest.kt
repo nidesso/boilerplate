@@ -23,14 +23,16 @@ class VacancyTest @Autowired constructor(
         schoolRepository.save(school)
 
         val vacancy = Vacancy(school)
-        vacancyRepository.save(vacancy)
-
-        t1.vacancy.add(vacancy)
         vacancy.addTeacher(t1)
 
-        assertEquals(1, vacancyRepository.findById(1).get().teachers.size)
-        assertEquals(1, teacherRepository.findById(1).get().vacancy.size)
 
+        vacancyRepository.save(vacancy)
+        //t1.vacancies.add(vacancy)
 
+        assertEquals(1, vacancyRepository.findAll()[0].teachers.size)
+        assertEquals(1, teacherRepository.findById(1).get().vacancies.size)
     }
+
+
+
 }

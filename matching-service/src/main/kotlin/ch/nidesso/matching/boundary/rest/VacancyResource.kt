@@ -21,6 +21,6 @@ class VacancyResource(
 
     @PutMapping("/vacancy/{vacancyId}")
     fun apply(
-        @PathVariable vacancyId: Long, @RequestBody teacher: Teacher
-    ) = vacancyService.addTeacher(vacancyId, teacher);
+        @PathVariable vacancyId: Long, @RequestBody teacherId: Long
+    ) = vacancyService.addTeacher(vacancyId, teacherId);
 }
