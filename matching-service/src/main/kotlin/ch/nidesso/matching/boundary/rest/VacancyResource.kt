@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @CrossOrigin
 class VacancyResource(
-    val repository: VacancyRepository,
+    val vacancyRepository: VacancyRepository,
     val vacancyService: VacancyService
 ) {
 
     @GetMapping("/vacancy")
-    fun findAll() = repository.findAll()
+    fun findAll() = vacancyRepository.findAll()
 
     @PostMapping("/vacancy")
     fun create(@RequestBody item: Vacancy) = vacancyService.createVacancy(item);
 
     @PutMapping("/vacancy/{vacancyId}")
     fun apply(
-        @PathVariable vacancyId: Long, @RequestBody teacher: Teacher
-    ) = vacancyService.addTeacher(vacancyId, teacher);
+        @PathVariable vacancyId: Long, @RequestBody teacherId: Long
+    ) = vacancyService.addTeacher(vacancyId, teacherId);
 }
