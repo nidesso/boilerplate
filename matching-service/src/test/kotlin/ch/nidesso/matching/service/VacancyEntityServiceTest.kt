@@ -25,8 +25,9 @@ class VacancyEntityServiceTest @Autowired constructor(
 
         val a1 = Address("street1", "city", "1234")
 
-        schoolService.save(School("name", address = a1))
+        schoolService.save(School("name"))
         teacherService.save(Teacher("lehrer 1", address = a1))
+
 
         val school = schoolService.schoolRepository.findAll()[0]
         val teacher = teacherRepository.findAll()[0]

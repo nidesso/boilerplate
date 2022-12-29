@@ -1,5 +1,6 @@
 package ch.nidesso.matching.service
 
+import ch.nidesso.matching.entity.Address
 import ch.nidesso.matching.entity.School
 import org.springframework.stereotype.Service
 
@@ -11,7 +12,14 @@ class SchoolService(
 ) {
 
     fun save(school: School) {
-        addressRepository.save(school.address)
+        schoolRepository.save(school)
+    }
+
+    fun addAddress(schoolId: Long, address: Address){
+        addressRepository.save(address)
+
+        val school = schoolRepository.findById(schoolId).get()
+        school.addresses.add(address);
         schoolRepository.save(school)
     }
 

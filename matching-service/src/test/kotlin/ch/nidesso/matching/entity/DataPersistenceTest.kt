@@ -30,7 +30,7 @@ class DataPersistenceTest @Autowired constructor(
 
 
         val schoolEntity = School(
-            name = "name", address = a1
+            name = "name"
         );
         val teacherEntity = Teacher(
             name = "lehrer 1", address = a2

@@ -14,8 +14,11 @@ data class School(
     @OneToMany
     val teachers: MutableSet<Teacher> = mutableSetOf(),
 
-    @ManyToOne
-    val address: Address = Address(),
+    @OneToMany
+    val addresses: MutableSet<Address> = mutableSetOf(),
+
+    @OneToMany
+    val schedules: MutableSet<Schedule> = mutableSetOf(),
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
