@@ -11,6 +11,4 @@ data class Teacher(
     val vacancies: MutableCollection<Vacancy> = mutableSetOf(),
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
-) {
-
-}
+)

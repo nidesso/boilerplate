@@ -6,5 +6,13 @@ import jakarta.persistence.*
 @Entity
 data class School(
     var name: String = "",
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
+
+    @OneToMany(mappedBy = "school")
+    val vacancies: MutableCollection<Vacancy> = mutableSetOf(),
+
+    @OneToMany
+    val teachers: MutableSet<Teacher> = mutableSetOf(),
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
 )
