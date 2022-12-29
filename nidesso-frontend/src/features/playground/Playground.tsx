@@ -1,6 +1,6 @@
 import Button from "../../components/ui-lib/Button";
 import { ComponentStyles } from "../../helpers/constants/styles";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Menu, Popover, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import ListBox from "../../components/ui-lib/ListBox";
 import { TestForm } from "./TestForm";
@@ -30,6 +30,7 @@ function Playground() {
     const [selectedPerson, setSelectedPerson] = useState(people[0])
     const [isOpen, setIsOpen] = useState(false)
     const [fact, setFact] = useState<string>('');
+    const [isLoadingfact, setisLoadingFact] = useState(false);
 
     return (
         <div>
@@ -126,16 +127,28 @@ function Playground() {
             <hr className="my-4 -mx-4"></hr>
             <h1 className="my-4">API</h1>
             <Button theme="primary" className="mr-4" onClick={() => {
-                api.fact()
-                    .then(r => setFact(r.data.fact))
-                    .catch(console.log);
+                api.doApiCall(api.fact, setisLoadingFact)
+                    .then(r => setFact(r))
             }}>Call Cat Api</Button>
             <Button theme="primary" className="" onClick={() => {
-                api.getVacancies()
+                api.doApiCall(api.getVacancies)
                     .then(console.log)
-                    .catch(console.log);
             }}>Call Api</Button>
-            {fact && <div>{fact}</div>}
+            {!isLoadingfact && fact && <div>{fact}</div>}
+            {isLoadingfact && <div>Loading Fact ...</div>}
+            <hr className="my-4 -mx-4"></hr>
+            <h1 className="my-4">Popover</h1>
+            <Popover className="relative" >
+                <Popover.Button>Popover</Popover.Button>
+                <Popover.Panel>
+                    <div className="grid grid-cols-2">
+                        <a href="/analytics">Analytics</a>
+                        <a href="/engagement">Engagement</a>
+                        <a href="/security">Security</a>
+                        <a href="/integrations">Integrations</a>
+                    </div>
+                </Popover.Panel>
+            </Popover>
         </div>
     );
 }
