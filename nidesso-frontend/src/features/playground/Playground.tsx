@@ -7,6 +7,7 @@ import { TestForm } from "./TestForm";
 import { Input } from "../../components/ui-lib/Input";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
+import { DatePicker } from '@mantine/dates';
 
 const people = [
     { id: 1, name: 'Durward Reynolds', unavailable: false },
@@ -29,7 +30,7 @@ function Playground() {
 
     const [selectedPerson, setSelectedPerson] = useState(people[0])
     const [isOpen, setIsOpen] = useState(false)
-    const [fact, setFact] = useState<string>('');
+    const [fact, setFact] = useState('');
     const [isLoadingfact, setisLoadingFact] = useState(false);
 
     return (
@@ -108,6 +109,9 @@ function Playground() {
                     valueKey={(value) => value.name}
                 ></ListBox>
             </div>
+            <hr className="my-4 -mx-4"></hr>
+            <h1 className="my-4">Datepicker</h1>
+            <DatePicker placeholder="Pick date" label="Event date" withAsterisk />
             <hr className="my-4 -mx-4"></hr>
             <h1 className="my-4">Form</h1>
             <TestForm></TestForm>
