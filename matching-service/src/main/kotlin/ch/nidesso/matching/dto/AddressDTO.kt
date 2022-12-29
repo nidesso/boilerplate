@@ -5,3 +5,4 @@ data class AddressDTO(
     val city: String,
     val postalCode: Number,
 )
+
