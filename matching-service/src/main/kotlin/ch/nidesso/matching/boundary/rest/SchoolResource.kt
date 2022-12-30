@@ -9,6 +9,7 @@ import ch.nidesso.matching.service.SchoolService
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@CrossOrigin
 class SchoolResource(
     val repository: SchoolRepository,
     val teacherRepository: TeacherRepository,

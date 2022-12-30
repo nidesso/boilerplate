@@ -1,8 +1,8 @@
-import { School } from "../school/school"
-import { Teacher } from "../teacher/teacher";
+import { school } from "../school/school"
+import { teacher } from "../teacher/teacher";
 
-export type Vacancy = {
-    school: School;
-    teachers: Teacher[];
+export type vacancy = {
+    school: school;
+    teachers: teacher[];
     id: number;
 }

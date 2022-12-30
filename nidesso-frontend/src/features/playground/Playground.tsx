@@ -7,7 +7,6 @@ import { TestForm } from "./TestForm";
 import { Input } from "../../components/ui-lib/Input";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
-import { DatePicker } from '@mantine/dates';
 
 const people = [
     { id: 1, name: 'Durward Reynolds', unavailable: false },
@@ -111,7 +110,7 @@ function Playground() {
             </div>
             <hr className="my-4 -mx-4"></hr>
             <h1 className="my-4">Datepicker</h1>
-            <DatePicker placeholder="Pick date" label="Event date" withAsterisk />
+            <Input type="date" name="date" id="date" placeholder="Pick date" label="Event date" />
             <hr className="my-4 -mx-4"></hr>
             <h1 className="my-4">Form</h1>
             <TestForm></TestForm>

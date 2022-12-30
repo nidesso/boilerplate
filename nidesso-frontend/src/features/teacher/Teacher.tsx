@@ -1,20 +1,19 @@
 import { Dialog } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
-import api from "../../helpers/network/api";
+import { vacancy } from "../../models/vacancy/vacancy";
 import VacancyCard from "../school/VacancyCard";
-import { VacancyFormFields } from "../school/VacancyForm";
 
 function Teacher() {
-    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<VacancyFormFields[]>([]);
+    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: vacancy }>({ isOpen: false });
+    const [vacancies, setVacancies] = useState<vacancy[]>([]);
 
-    useEffect(() => {
-        api.getVacancies()
-            .then(data => setVacancies(data))
-    }, []);
+    // useEffect(() => {
+    //     api.getVacancies()
+    //         .then(data => setVacancies(data))
+    // }, []);
 
     return (
         <>
@@ -30,7 +29,7 @@ function Teacher() {
                         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-4">
                             {(
                                 vacancies.map((v) => (
-                                    <VacancyCard key={v.title} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
+                                    <VacancyCard key={v.id} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
                                 ))
                             )}
                         </div>
@@ -39,9 +38,9 @@ function Teacher() {
             </main>
             <UiDialog open={dialogState.isOpen} onClose={() => setDialogState({ isOpen: false })}>
                 <>
-                    <Dialog.Title as="h3">{dialogState.vacancy?.title}</Dialog.Title>
+                    <Dialog.Title as="h3">{dialogState.vacancy?.id}</Dialog.Title>
                     <Dialog.Description className="text-gray-800 my-2">
-                        {dialogState.vacancy?.description}
+                        {dialogState.vacancy?.id}
                     </Dialog.Description>
                     <Button className="mt-4 mr-2">Bewerben</Button>
                     <Button theme="secondary" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>

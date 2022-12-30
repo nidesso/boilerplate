@@ -4,12 +4,13 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
+import { vacancy } from "../../models/vacancy/vacancy";
 import VacancyCard from "./VacancyCard";
 import VacancyForm, { VacancyFormFields } from "./VacancyForm";
 
 function School() {
-    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<VacancyFormFields[]>([]);
+    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: vacancy }>({ isOpen: false });
+    const [vacancies, setVacancies] = useState<vacancy[]>([]);
 
     useEffect(() => {
         api.getVacancies()
@@ -17,8 +18,8 @@ function School() {
     }, [])
 
     const onSubmit = (data: VacancyFormFields) => {
-        api.createVacancy(data)
-            .then(() => setDialogState({ isOpen: false }));
+        // api.createVacancy(data)
+        //     .then(() => setDialogState({ isOpen: false }));
     }
 
     return (
@@ -36,7 +37,7 @@ function School() {
                         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 grid-cols-1 gap-4">
                             {
                                 vacancies.map(v => (
-                                    <VacancyCard key={v.title} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
+                                    <VacancyCard key={v.id} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
                                 ))
                             }
                         </div>
@@ -51,7 +52,6 @@ function School() {
                     </Dialog.Description>
                     <VacancyForm
                         onSubmit={onSubmit}
-                        vacancy={dialogState.vacancy}
                         actions={[
                             <Button key='cancel' theme="secondary" className="ml-2" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
                         ]}></VacancyForm>

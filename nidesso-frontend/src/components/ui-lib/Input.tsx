@@ -1,17 +1,16 @@
 import {
     forwardRef,
     DetailedHTMLProps,
-    InputHTMLAttributes
+    InputHTMLAttributes,
+    HTMLInputTypeAttribute
 } from 'react';
 import classNames from 'classnames';
-
-export type InputType = 'text' | 'email' | 'password';
 
 export type InputProps = {
     id: string;
     name: string;
     label: string;
-    type?: InputType;
+    type?: HTMLInputTypeAttribute;
     className?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
@@ -29,15 +28,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ref
     ) => {
         return (
-            <input
-                id={id}
-                ref={ref}
-                name={name}
-                type={type}
-                aria-label={label}
-                placeholder={placeholder}
-                className={classNames(
-                    `relative
+            <>
+                <span className='text-sm'>{label}</span>
+                <input
+                    id={id}
+                    ref={ref}
+                    name={name}
+                    type={type}
+                    aria-label={label}
+                    placeholder={placeholder}
+                    className={classNames(
+                        `relative
                     border
                     border-gray-100
                     hover:border-th-primary-400
@@ -56,10 +57,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     focus:ring-th-primary-100 
                     focus:ring-2
                     focus:ring-opacity-30`,
-                    className)
-                }
-                {...props}
-            />
+                        className)
+                    }
+                    {...props}
+                />
+            </>
         );
     }
 );
