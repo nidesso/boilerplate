@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
@@ -10,10 +10,11 @@ function Teacher() {
     const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: vacancy }>({ isOpen: false });
     const [vacancies, setVacancies] = useState<vacancy[]>([]);
 
-    // useEffect(() => {
-    //     api.getVacancies()
-    //         .then(data => setVacancies(data))
-    // }, []);
+    useEffect(() => {
+        // api.getVacancies()
+        //     .then(data => setVacancies(data))
+        setVacancies([]);
+    }, []);
 
     return (
         <>
