@@ -3,9 +3,9 @@ package ch.nidesso.matching.boundary.rest
 import ch.nidesso.matching.dto.AddressDTO
 import ch.nidesso.matching.dto.SchoolDTO
 import ch.nidesso.matching.dto.TeacherDTO
-import ch.nidesso.matching.entity.SchoolRepository
-import ch.nidesso.matching.entity.TeacherRepository
+import ch.nidesso.matching.service.SchoolRepository
 import ch.nidesso.matching.service.SchoolService
+import ch.nidesso.matching.service.TeacherRepository
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -18,17 +18,13 @@ class SchoolResource(
 
 
     @GetMapping("/school")
-    fun findAll() = listOf(SchoolDTO(1, AddressDTO("", "", 1)))
-
+    fun findAll() = {}
     @GetMapping("/school/{schoolId}")
-    fun findByID(@PathVariable schoolId: Long) = SchoolDTO(schoolId, AddressDTO("", "", 1));
-
+    fun findByID(@PathVariable schoolId: Long) = {}
     @GetMapping("/school/{schoolId}/teacher/")
-    fun findTeacherBySchool(@PathVariable schoolId: Long) = TeacherDTO(schoolId, "", "", AddressDTO("", "", 1));
-
+    fun findTeacherBySchool(@PathVariable schoolId: Long) = {}
     @GetMapping("/school/{schoolId}/vacancy/")
-    fun findVacancyBySchool(@PathVariable schoolId: Long) = TeacherDTO(schoolId, "", "", AddressDTO("", "", 1));
-
+    fun findVacancyBySchool(@PathVariable schoolId: Long) = {}
     @PostMapping("/school")
     fun add(@RequestBody item: SchoolDTO) = {}
 

@@ -1,19 +1,27 @@
 package ch.nidesso.matching.service
 
-import ch.nidesso.matching.boundary.rest.TeacherResource
-import ch.nidesso.matching.entity.SchoolRepository
-import ch.nidesso.matching.entity.TeacherRepository
-import ch.nidesso.matching.entity.Vacancy
-import ch.nidesso.matching.entity.VacancyRepository
-import org.apache.juli.logging.Log
+import ch.nidesso.matching.entity.Address
+import ch.nidesso.matching.entity.School
 import org.springframework.stereotype.Service
 
 @Service
 class SchoolService(
+    val addressRepository: AddressRepository,
     val teacherRepository: TeacherRepository,
     val schoolRepository: SchoolRepository,
 ) {
 
+    fun save(school: School) {
+        schoolRepository.save(school)
+    }
+
+    fun addAddress(schoolId: Long, address: Address){
+        addressRepository.save(address)
+
+        val school = schoolRepository.findById(schoolId).get()
+        school.addresses.add(address);
+        schoolRepository.save(school)
+    }
 
     fun addTeacher(schoolId: Long, teacherId: Long) {
         val teacher = teacherRepository.findById(teacherId).get();
