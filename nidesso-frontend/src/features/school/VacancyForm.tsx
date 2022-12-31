@@ -30,10 +30,12 @@ function VacancyForm({
         control,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm<VacancyFormFields>();
 
     const [teachers, setTeachers] = useState<teacher[]>([]);
     const [selectedTeacher, setSelectedTeacher] = useState<teacher>();
+    const watchAllFields = watch();
 
     const schedule: schedule = {
         duration: [
@@ -150,7 +152,8 @@ function VacancyForm({
                         errors={errors as any}
                     ></FormInput>
                 </div>
-                <Scheduler className="mt-4" schedule={schedule}></Scheduler>
+                {watchAllFields.start && watchAllFields.end &&
+                    <Scheduler className="mt-4" schedule={schedule} startDate={new Date(watchAllFields.start)} endDate={new Date(watchAllFields.end)}></Scheduler>}
                 <Button className="mt-4" theme="primary" onClick={_onSubmit}>Speichern</Button>
                 {actions}
             </form>

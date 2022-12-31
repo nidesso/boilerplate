@@ -7,6 +7,7 @@ import { TestForm } from "./TestForm";
 import { Input } from "../../components/ui-lib/Input";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
+import { Tooltip } from "flowbite-react";
 
 const people = [
     { id: 1, name: 'Durward Reynolds', unavailable: false },
@@ -34,6 +35,9 @@ function Playground() {
 
     return (
         <div>
+            <Tooltip content="Tooltip content">
+                <Button>Default tooltip</Button>
+            </Tooltip>
             <h1 className="my-4">Buttons</h1>
             <div className="grid md:grid-cols-3 lg:grid-cols-6 grid-cols-1 gap-2">
                 <Button theme="primary">Primary</Button>
