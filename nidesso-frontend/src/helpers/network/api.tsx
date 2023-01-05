@@ -12,6 +12,21 @@ export const client = axios.create({
 //     { title: 'Ausschreibung 2', description: 'Dies ist eine Beschreibung einer Ausschreibung zum testen' }
 // ];
 
+const teachers: teacher[] = [
+    {
+        id: 1,
+        username: 'Severin Haas'
+    },
+    {
+        id: 2,
+        username: 'Jan Kuonen'
+    },
+    {
+        id: 3,
+        username: 'Manuel Käch'
+    }
+];
+
 class Api {
     doApiCall<T>(call: () => Promise<T>, setIsLoading: (value: boolean) => void = (_) => { }): Promise<T> {
         setIsLoading(true);
@@ -33,8 +48,9 @@ class Api {
     }
 
     getTeachersOfSchool(id: number): Promise<teacher[]> {
-        return client.get<teacher>(`school/${id}/teacher/`)
-            .then(r => [r.data]);
+        // return client.get<teacher>(`school/${id}/teacher/`)
+        //     .then(r => [r.data]);
+        return Promise.resolve(teachers);
     }
 
     fact() {

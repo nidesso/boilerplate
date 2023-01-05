@@ -1,12 +1,72 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useEffect, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import Scheduler from "../../components/Scheduler";
 import Button from "../../components/ui-lib/Button";
 import { FormInput } from "../../components/ui-lib/form/FormInput";
 import FormListBox from "../../components/ui-lib/form/FormListBox";
 import api from "../../helpers/network/api";
+import { ExtendedLesson, generateSchedule } from "../../helpers/utils/calendar.util";
 import { schedule } from "../../models/schedule/schedule";
 import { teacher } from "../../models/teacher/teacher";
+
+const schoolSchedule: schedule = {
+    duration: [
+        { start: "0815", end: "0900" },
+        { start: "0910", end: "0955" },
+        { start: "1015", end: "1100" },
+        { start: "1110", end: "1155" },
+        { start: "1330", end: "1415" },
+        { start: "1425", end: "1510" },
+        { start: "1530", end: "1615" },
+    ],
+    lessons: [
+        [
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+        ],
+        [
+            { active: false, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+        ],
+        [
+            { active: false, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: false, name: 'Fach' },
+        ],
+        [
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+        ],
+        [
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: true, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+            { active: false, name: 'Fach' },
+        ],
+    ]
+}
 
 type VacancyFormProps = {
     onSubmit: (data: VacancyFormFields) => void;
@@ -30,71 +90,18 @@ function VacancyForm({
         control,
         handleSubmit,
         formState: { errors },
-        watch,
     } = useForm<VacancyFormFields>();
 
     const [teachers, setTeachers] = useState<teacher[]>([]);
     const [selectedTeacher, setSelectedTeacher] = useState<teacher>();
-    const watchAllFields = watch();
+    const [lessons, setLessons] = useState<ExtendedLesson[][]>([]);
+    const data = useWatch({ name: ['start', 'end'], control })
 
-    const schedule: schedule = {
-        duration: [
-            { start: "0815", end: "0900" },
-            { start: "0910", end: "0955" },
-            { start: "1015", end: "1100" },
-            { start: "1110", end: "1155" },
-            { start: "1330", end: "1415" },
-            { start: "1425", end: "1510" },
-            { start: "1530", end: "1615" },
-        ],
-        lessons: [
-            [
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-            ],
-            [
-                { active: false, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-            ],
-            [
-                { active: false, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: false, name: 'Fach' },
-            ],
-            [
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-            ],
-            [
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: true, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-                { active: false, name: 'Fach' },
-            ],
-        ]
-    }
+    const setValueCallback = useCallback(
+        (values: ExtendedLesson[][]) => {
+            setLessons(values)
+        }, [],
+    );
 
     const _onSubmit = handleSubmit((data) => {
         onSubmit(data);
@@ -102,12 +109,16 @@ function VacancyForm({
 
     useEffect(() => {
         api.doApiCall(() => api.getTeachersOfSchool(0))
-            .then(setTeachers)
+            .then(setTeachers);
     }, []);
 
     useEffect(() => {
-
-    }, [selectedTeacher])
+        if (data[0] && data[1]) {
+            setLessons(generateSchedule(schoolSchedule, new Date(data[0]), new Date(data[1])));
+        } else {
+            setLessons([]);
+        }
+    }, [data]);
 
     return (
         <>
@@ -119,7 +130,7 @@ function VacancyForm({
                     value={selectedTeacher}
                     valueChanged={setSelectedTeacher}
                     itemDisabled={(_) => false}
-                    valueKey={t => t.id}
+                    valueKey={t => t.username}
                     valueIdentifier={t => t.id}
                     errors={errors as any}
                     rules={{
@@ -152,8 +163,13 @@ function VacancyForm({
                         errors={errors as any}
                     ></FormInput>
                 </div>
-                {watchAllFields.start && watchAllFields.end &&
-                    <Scheduler className="mt-4" schedule={schedule} startDate={new Date(watchAllFields.start)} endDate={new Date(watchAllFields.end)}></Scheduler>}
+                {lessons?.length > 0 &&
+                    <Scheduler
+                        className="mt-4"
+                        lessons={lessons}
+                        startDate={new Date(data[0])}
+                        setValue={setValueCallback}
+                    ></Scheduler>}
                 <Button className="mt-4" theme="primary" onClick={_onSubmit}>Speichern</Button>
                 {actions}
             </form>
