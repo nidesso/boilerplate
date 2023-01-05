@@ -11,6 +11,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/school")
+@CrossOrigin
 class SchoolResource(
     val schoolRepository: SchoolRepository,
     val schoolService: SchoolService,
