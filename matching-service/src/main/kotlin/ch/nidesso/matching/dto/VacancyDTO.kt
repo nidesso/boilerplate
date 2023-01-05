@@ -1,13 +1,20 @@
 package ch.nidesso.matching.dto
 
-import ch.nidesso.matching.dto.schedule.DatespanDTO
-import ch.nidesso.matching.dto.schedule.TimespanDTO
 import ch.nidesso.matching.dto.schedule.LessonDTO
+import ch.nidesso.matching.entity.Schedule
+import ch.nidesso.matching.entity.School
+import ch.nidesso.matching.entity.Vacancy
+
 
 data class VacancyDTO(
-    val vacancyId: Long,
-    val scheduleId: Long,
+    val id: Long?,
 
-    val duration: DatespanDTO,
-    val lessons: List<LessonDTO>
-)
+    val scheduleId: Long,
+    val teacherId: Long,
+
+    var schoolId: Long,
+    val lessons: List<LessonDTO>,
+) {
+
+
+}

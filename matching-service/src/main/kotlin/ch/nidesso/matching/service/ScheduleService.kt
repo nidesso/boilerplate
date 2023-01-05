@@ -13,7 +13,6 @@ class ScheduleService(
         schedule.lessons.forEach { 
             lessonRepository.save(it)
         }
-        
         scheduleRepository.save(schedule)
     }
 

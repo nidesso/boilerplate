@@ -10,24 +10,26 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class SchoolEntityServiceTest @Autowired constructor(
-    var schoolService: SchoolService,
+class TeacherEntityServiceTest @Autowired constructor(
+    var teacherService: TeacherService,
 ) {
 
 
     @Test
-    fun shouldAddAddress() {
+    fun shouldAddTeacher() {
         val a1 = Address("street1", "city", "1234")
+        val teacher = Teacher("Kaech","Manuel","","", mutableSetOf(), address = a1)
 
-        schoolService.addSchool(School("name"))
-        val school = schoolService.schoolRepository.findAll()[0]
-        assertEquals(0, school.addresses.size)
+        teacherService.addTeacher(teacher)
 
-        schoolService.addAddress(school.id!!, a1)
-
-        val schools = schoolService.schoolRepository.findAll()
-        assertEquals(1, schools[0].addresses.size)
+        teacherService.teacherRepository.findAll().get(0).let {
+            assertEquals("Kaech", it.name)
+            assertEquals("Manuel", it.lastname)
+            assertEquals("street1", it.address.street)
+        }
     }
+
+
 
 
 }

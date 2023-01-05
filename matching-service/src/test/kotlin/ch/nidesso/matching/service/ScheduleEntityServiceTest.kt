@@ -1,6 +1,6 @@
 package ch.nidesso.matching.service
 
-import ch.nidesso.matching.entity.Lesson
+import ch.nidesso.matching.entity.ScheduleLesson
 import ch.nidesso.matching.entity.Schedule
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -15,7 +15,7 @@ class ScheduleEntityServiceTest @Autowired constructor(
     @Test
     fun shouldSaveSchedule() {
         val schedule = Schedule(
-            lessons = mutableSetOf(Lesson(1,2,"test")),
+            lessons = mutableSetOf(ScheduleLesson(1,2,"test")),
         )
 
         scheduleService.save(schedule)
@@ -25,6 +25,4 @@ class ScheduleEntityServiceTest @Autowired constructor(
             assertEquals(1, it[0].lessons.size)
         }
     }
-
-
 }

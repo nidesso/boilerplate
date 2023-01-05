@@ -1,6 +1,8 @@
 package ch.nidesso.matching.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.UuidGenerator
+import java.util.*
 
 
 @Entity
@@ -16,5 +18,5 @@ data class Teacher(
     @ManyToOne
     val address: Address = Address(),
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
+    @Id @GeneratedValue(generator = "UUID") @UuidGenerator val id: UUID? = null,
 )

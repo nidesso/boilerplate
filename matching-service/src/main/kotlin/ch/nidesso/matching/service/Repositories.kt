@@ -4,14 +4,15 @@ import ch.nidesso.matching.entity.Address
 import ch.nidesso.matching.entity.School
 import ch.nidesso.matching.entity.Teacher
 import ch.nidesso.matching.entity.Vacancy
-import ch.nidesso.matching.entity.Lesson
+import ch.nidesso.matching.entity.ScheduleLesson
 import ch.nidesso.matching.entity.Schedule
 
 import org.springframework.data.jpa.repository.JpaRepository
+import java.util.UUID
 
-interface ScheduleRepository : JpaRepository<Schedule, Long> {}
-interface LessonRepository : JpaRepository<Lesson, Long> {}
-interface AddressRepository : JpaRepository<Address, Long> {}
-interface SchoolRepository : JpaRepository<School, Long> {}
-interface TeacherRepository : JpaRepository<Teacher, Long> {}
-interface VacancyRepository : JpaRepository<Vacancy, Long> {}
+interface ScheduleRepository : JpaRepository<Schedule, UUID> {}
+interface LessonRepository : JpaRepository<ScheduleLesson, UUID> {}
+interface AddressRepository : JpaRepository<Address, UUID> {}
+interface SchoolRepository : JpaRepository<School, UUID> {}
+interface TeacherRepository : JpaRepository<Teacher, UUID> {}
+interface VacancyRepository : JpaRepository<Vacancy, UUID> {}

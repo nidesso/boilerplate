@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @CrossOrigin
 class VacancyResource(
-    val vacancyRepository: VacancyRepository, val vacancyService: VacancyService
+    val vacancyRepository: VacancyRepository,
+    val vacancyService: VacancyService,
 ) {
 
     @GetMapping("/vacancy")
@@ -24,8 +25,4 @@ class VacancyResource(
         @PathVariable schoolId: Long, @RequestBody item: VacancyDTO
     ) = {}
 
-    @PutMapping("/vacancy/{vacancyId}")
-    fun apply(
-        @PathVariable vacancyId: Long, @RequestBody teacherId: Long
-    ) = vacancyService.addTeacher(vacancyId, teacherId);
 }

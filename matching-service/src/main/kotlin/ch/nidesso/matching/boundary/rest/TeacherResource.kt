@@ -1,29 +1,32 @@
 package ch.nidesso.matching.boundary.rest
 
 import ch.nidesso.matching.dto.TeacherDTO
-import ch.nidesso.matching.dto.VacancyDTO
+import ch.nidesso.matching.dto.toDto
+import ch.nidesso.matching.dto.toEntity
 import ch.nidesso.matching.service.TeacherRepository
+import ch.nidesso.matching.service.TeacherService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 
 @RestController
 class TeacherResource(
-    val repository: TeacherRepository
+    val repository: TeacherRepository,
+    val teacherService: TeacherService
 ) {
     @GetMapping("/teacher")
-    fun findAll() = {}
+    @Operation(summary = "get all teachers")
+    fun findAll() = repository.findAll().map { it.toDto() }
 
-    @PostMapping("/teacher/{teacherId}/vacancy")
-    fun create(
-        @PathVariable teacherId: Long, @RequestBody item: VacancyDTO
-    ) = {}
+    @GetMapping("/teacher/{teacherId}")
+    @Operation(summary = "get teacher by id")
+    fun findById(@PathVariable teacherId: UUID) = repository.findById(teacherId)
 
     @PostMapping("/teacher")
-    fun add(@RequestBody item: TeacherDTO) = {};
-
-    @PutMapping("/teacher/")
-    fun update(@RequestBody item: TeacherDTO) = {}
-
-    @DeleteMapping("/teacher")
-    fun delete(@RequestBody item: TeacherDTO) = {}
+    @Operation(summary = "add new teacher")
+    fun add(@RequestBody item: TeacherDTO) = teacherService.addTeacher(item.toEntity())
+    @DeleteMapping("/teacher/{teacherId}")
+    @Operation(summary = "delete teacher by id")
+    fun delete(@PathVariable teacherId: UUID) = repository.deleteById(teacherId)
 }

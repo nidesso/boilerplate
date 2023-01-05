@@ -3,6 +3,7 @@ package ch.nidesso.matching.service
 import ch.nidesso.matching.entity.Teacher
 import ch.nidesso.matching.entity.Vacancy
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class TeacherService(
@@ -11,19 +12,9 @@ class TeacherService(
     val teacherRepository: TeacherRepository
 ) {
 
-    fun save(teacher: Teacher) {
+    fun addTeacher(teacher: Teacher) {
         addressRepository.save(teacher.address);
         teacherRepository.save(teacher);
     }
-
-
-    fun addTeacher(vacancyId: Long, teacherId: Long) {
-        val vacancy = vacancyRepository.findById(vacancyId).get()
-        val teacher = teacherRepository.findById(teacherId).get();
-
-        vacancy.addTeacher(teacher)
-        vacancyRepository.save(vacancy)
-    }
-
 }
 
