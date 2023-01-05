@@ -9,15 +9,16 @@ import VacancyForm, { VacancyFormFields } from "./VacancyForm";
 
 function School() {
     const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<VacancyFormFields[]>([]);
+    const [vacancies, setVacancies] = useState<(VacancyFormFields & { id: string })[]>([]);
 
     useEffect(() => {
         api.getVacancies()
-            .then(data => setVacancies(data))
+            .then(data => setVacancies(data.map(v => ({ ...v, id: crypto.randomUUID() }))))
     }, [])
 
     const onSubmit = (data: VacancyFormFields) => {
         api.createVacancy(data)
+            .then(() => setVacancies([...vacancies, { ...data, id: crypto.randomUUID() }]))
             .then(() => setDialogState({ isOpen: false }));
     }
 
@@ -36,7 +37,7 @@ function School() {
                         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 grid-cols-1 gap-4">
                             {
                                 vacancies.map(v => (
-                                    <VacancyCard key={v.title} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
+                                    <VacancyCard key={v.id} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
                                 ))
                             }
                         </div>
@@ -51,7 +52,6 @@ function School() {
                     </Dialog.Description>
                     <VacancyForm
                         onSubmit={onSubmit}
-                        vacancy={dialogState.vacancy}
                         actions={[
                             <Button key='cancel' theme="secondary" className="ml-2" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
                         ]}></VacancyForm>

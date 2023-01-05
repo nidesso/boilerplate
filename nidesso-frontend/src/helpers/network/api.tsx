@@ -1,20 +1,34 @@
 import axios from 'axios';
 import { VacancyFormFields } from '../../features/school/VacancyForm';
+import { teacher } from '../../models/teacher/teacher';
 
 export const client = axios.create({
     baseURL: process.env.REACT_APP_API_ENDPOINT
 });
 
 const vacancies: VacancyFormFields[] = [
-    { title: 'Ausschreibung 1', description: 'Dies ist eine Beschreibung einer Ausschreibung zum testen' },
-    { title: 'Ausschreibung 2', description: 'Dies ist eine Beschreibung einer Ausschreibung zum testen' }
+];
+
+const teachers: teacher[] = [
+    {
+        id: 1,
+        username: 'Severin Haas'
+    },
+    {
+        id: 2,
+        username: 'Jan Kuonen'
+    },
+    {
+        id: 3,
+        username: 'Manuel Käch'
+    }
 ];
 
 class Api {
-    doApiCall<T>(call: () => Promise<T>, setIsLoading: (value: boolean) => void = (_) => { }) {
+    doApiCall<T>(call: () => Promise<T>, setIsLoading: (value: boolean) => void = (_) => { }): Promise<T> {
         setIsLoading(true);
         return call()
-            .catch(console.log)
+            .catch(e => { throw e })
             .finally(() => setIsLoading(false));
     }
 
@@ -25,8 +39,15 @@ class Api {
     }
 
     getVacancies() {
-        // return client.get('vacancy');
+        // return client.get<vacancy[]>('vacancy')
+        //     .then(r => r.data);
         return Promise.resolve(vacancies);
+    }
+
+    getTeachersOfSchool(id: number): Promise<teacher[]> {
+        // return client.get<teacher>(`school/${id}/teacher/`)
+        //     .then(r => [r.data]);
+        return Promise.resolve(teachers);
     }
 
     fact() {

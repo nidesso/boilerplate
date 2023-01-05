@@ -11,6 +11,7 @@ import java.util.*
 
 
 @RestController
+@CrossOrigin
 class TeacherResource(
     val repository: TeacherRepository,
     val teacherService: TeacherService

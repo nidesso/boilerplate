@@ -9,11 +9,11 @@ import { VacancyFormFields } from "../school/VacancyForm";
 
 function Teacher() {
     const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<VacancyFormFields[]>([]);
+    const [vacancies, setVacancies] = useState<(VacancyFormFields & {id: string})[]>([]);
 
     useEffect(() => {
         api.getVacancies()
-            .then(data => setVacancies(data))
+            .then(data => setVacancies(data.map(v => ({...v, id: crypto.randomUUID()}))))
     }, []);
 
     return (
@@ -30,7 +30,7 @@ function Teacher() {
                         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-4">
                             {(
                                 vacancies.map((v) => (
-                                    <VacancyCard key={v.title} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
+                                    <VacancyCard key={v.id} vacancy={v} onClick={() => setDialogState({ isOpen: true, vacancy: v })}></VacancyCard>
                                 ))
                             )}
                         </div>
@@ -39,9 +39,9 @@ function Teacher() {
             </main>
             <UiDialog open={dialogState.isOpen} onClose={() => setDialogState({ isOpen: false })}>
                 <>
-                    <Dialog.Title as="h3">{dialogState.vacancy?.title}</Dialog.Title>
+                    <Dialog.Title as="h3">{dialogState.vacancy?.start.toString()}</Dialog.Title>
                     <Dialog.Description className="text-gray-800 my-2">
-                        {dialogState.vacancy?.description}
+                        {dialogState.vacancy?.teacher.username}
                     </Dialog.Description>
                     <Button className="mt-4 mr-2">Bewerben</Button>
                     <Button theme="secondary" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
