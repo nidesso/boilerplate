@@ -4,22 +4,22 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
-import { vacancy } from "../../models/vacancy/vacancy";
 import VacancyCard from "./VacancyCard";
 import VacancyForm, { VacancyFormFields } from "./VacancyForm";
 
 function School() {
-    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: vacancy }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<vacancy[]>([]);
+    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
+    const [vacancies, setVacancies] = useState<(VacancyFormFields & { id: string })[]>([]);
 
     useEffect(() => {
         api.getVacancies()
-            .then(data => setVacancies(data))
+            .then(data => setVacancies(data.map(v => ({ ...v, id: crypto.randomUUID() }))))
     }, [])
 
     const onSubmit = (data: VacancyFormFields) => {
-        // api.createVacancy(data)
-        //     .then(() => setDialogState({ isOpen: false }));
+        api.createVacancy(data)
+            .then(() => setVacancies([...vacancies, { ...data, id: crypto.randomUUID() }]))
+            .then(() => setDialogState({ isOpen: false }));
     }
 
     return (

@@ -78,6 +78,7 @@ export type VacancyFormFields = {
     teacher: teacher;
     start: Date;
     end: Date;
+    lessons: ExtendedLesson[][]
 };
 
 function VacancyForm({
@@ -104,7 +105,14 @@ function VacancyForm({
     );
 
     const _onSubmit = handleSubmit((data) => {
-        onSubmit(data);
+        // check if at least one lesson is selected
+        if (lessons.every(l => l.every(ll => !ll.active))) {
+            return;
+        }
+        onSubmit({
+            ...data,
+            lessons
+        });
     });
 
     useEffect(() => {

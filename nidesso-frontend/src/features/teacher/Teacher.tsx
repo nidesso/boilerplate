@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
-import { vacancy } from "../../models/vacancy/vacancy";
+import api from "../../helpers/network/api";
 import VacancyCard from "../school/VacancyCard";
+import { VacancyFormFields } from "../school/VacancyForm";
 
 function Teacher() {
-    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: vacancy }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<vacancy[]>([]);
+    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
+    const [vacancies, setVacancies] = useState<(VacancyFormFields & {id: string})[]>([]);
 
     useEffect(() => {
-        // api.getVacancies()
-        //     .then(data => setVacancies(data))
-        setVacancies([]);
+        api.getVacancies()
+            .then(data => setVacancies(data.map(v => ({...v, id: crypto.randomUUID()}))))
     }, []);
 
     return (
@@ -39,9 +39,9 @@ function Teacher() {
             </main>
             <UiDialog open={dialogState.isOpen} onClose={() => setDialogState({ isOpen: false })}>
                 <>
-                    <Dialog.Title as="h3">{dialogState.vacancy?.id}</Dialog.Title>
+                    <Dialog.Title as="h3">{dialogState.vacancy?.start.toString()}</Dialog.Title>
                     <Dialog.Description className="text-gray-800 my-2">
-                        {dialogState.vacancy?.id}
+                        {dialogState.vacancy?.teacher.username}
                     </Dialog.Description>
                     <Button className="mt-4 mr-2">Bewerben</Button>
                     <Button theme="secondary" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
