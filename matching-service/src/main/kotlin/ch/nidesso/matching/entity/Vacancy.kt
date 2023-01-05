@@ -12,6 +12,7 @@ data class Vacancy(
     @ManyToOne val schedule: Schedule = Schedule(),
 
     @ManyToMany val teachers: MutableSet<Teacher> = mutableSetOf(),
+    @OneToMany val lessons: MutableSet<LessonVacancy> = mutableSetOf(),
 
     @Id @GeneratedValue(generator = "UUID") @UuidGenerator val id: UUID? = null,
 ) {

@@ -8,13 +8,14 @@ import java.util.UUID
 @Service
 class TeacherService(
     val addressRepository: AddressRepository,
-    val vacancyRepository: VacancyRepository,
     val teacherRepository: TeacherRepository
 ) {
+    fun addTeacher(teacher: Teacher): Teacher {
+        if (teacher.id != null && teacherRepository.existsById(teacher.id)) return teacher
 
-    fun addTeacher(teacher: Teacher) {
+
         addressRepository.save(teacher.address);
-        teacherRepository.save(teacher);
+        return teacherRepository.save(teacher);
     }
 }
 

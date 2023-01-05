@@ -16,6 +16,9 @@ class VacancyService(
     }
 
 
+
+
+
     fun addTeacher(vacancyId: UUID, teacherId: UUID) {
         val vacancy = vacancyRepository.findById(vacancyId).get()
         val teacher = teacherRepository.findById(teacherId).get();

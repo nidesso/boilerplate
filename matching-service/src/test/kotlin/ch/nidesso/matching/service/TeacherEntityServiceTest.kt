@@ -18,18 +18,19 @@ class TeacherEntityServiceTest @Autowired constructor(
     @Test
     fun shouldAddTeacher() {
         val a1 = Address("street1", "city", "1234")
-        val teacher = Teacher("Kaech","Manuel","","", mutableSetOf(), address = a1)
+        val teacher = Teacher("k1", "l1", "", "", mutableSetOf(), address = a1)
 
-        teacherService.addTeacher(teacher)
+        val tid = teacherService.addTeacher(teacher).id!!
 
-        teacherService.teacherRepository.findAll().get(0).let {
-            assertEquals("Kaech", it.name)
-            assertEquals("Manuel", it.lastname)
-            assertEquals("street1", it.address.street)
-        }
+        teacherService.teacherRepository
+            .findById(tid)
+            .get()
+            .let {
+                assertEquals("k1", it.name)
+                assertEquals("l1", it.lastname)
+                assertEquals("street1", it.address.street)
+            }
     }
-
-
 
 
 }

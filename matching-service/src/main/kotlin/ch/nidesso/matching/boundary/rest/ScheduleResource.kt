@@ -1,38 +1,36 @@
 package ch.nidesso.matching.boundary.rest
 
-import ch.nidesso.matching.dto.schedule.ScheduleDTO
+import ch.nidesso.matching.dto.schedule.CreateScheduleDTO
+import ch.nidesso.matching.dto.toEntity
+import ch.nidesso.matching.service.ScheduleRepository
+import ch.nidesso.matching.service.ScheduleService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
 @RestController
 @CrossOrigin
 class ScheduleResource(
+    val scheduleRepository: ScheduleRepository,
+    val scheduleService: ScheduleService,
 ) {
-
     @GetMapping("/school/{schoolId}/schedule/")
+    @Operation(summary = "find schedules by school id")
     fun findBySchool(
-        @PathVariable schoolId: Long,
-    ) = listOf(ScheduleDTO(listOf(), listOf()))
+        @PathVariable schoolId: UUID,
+    ) = scheduleService.findBySchoolId(schoolId)
 
-    @GetMapping("/schedule/{id}")
-    fun findAll(
-        @PathVariable id: Long,
-    ) = listOf(ScheduleDTO(listOf(), listOf()))
-
-    @PostMapping("/school/{schoolId}/teacher/{teacherId}/schedule/")
+    @PostMapping("/school/{schoolId}/schedule/")
+    @Operation(summary = "create a new scheduler on a school")
     fun create(
-        @PathVariable schoolId: Long,
-        @PathVariable teacherId: Long,
-        @RequestBody item: ScheduleDTO
-    ) = {};
-
-    @PutMapping("/schedule")
-    fun apply(
-        @RequestBody schedule: ScheduleDTO
-    ) = {}
+        @PathVariable schoolId: UUID,
+        @RequestBody item: CreateScheduleDTO
+    )  = scheduleService.addSchedule(schoolId, item.toEntity())
 
 
     @DeleteMapping("/schedule/{scheduleId}")
+    @Operation(summary = "delete a scheduler")
     fun apply(
-        @PathVariable scheduleId: Long,
-    ) = {}
+        @PathVariable scheduleId: UUID,
+    ) = scheduleRepository.deleteById(scheduleId)
 }

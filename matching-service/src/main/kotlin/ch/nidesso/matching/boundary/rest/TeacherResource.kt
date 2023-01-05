@@ -27,6 +27,7 @@ class TeacherResource(
     @PostMapping("/teacher")
     @Operation(summary = "add new teacher")
     fun add(@RequestBody item: TeacherDTO) = teacherService.addTeacher(item.toEntity())
+
     @DeleteMapping("/teacher/{teacherId}")
     @Operation(summary = "delete teacher by id")
     fun delete(@PathVariable teacherId: UUID) = repository.deleteById(teacherId)
