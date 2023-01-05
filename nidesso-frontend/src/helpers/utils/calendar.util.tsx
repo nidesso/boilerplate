@@ -1,10 +1,11 @@
-import { lesson } from "../../models/schedule/lesson";
-import { schedule } from "../../models/schedule/schedule";
+import { ScheduleLesson, SchedulerLesson } from "../../models/schedule/Lesson";
+import { Schedule } from "../../models/schedule/Schedule";
 import { mod } from "./math.util";
+import { v4 as uuidv4 } from 'uuid';
 
 export type ExtendedLesson = {
     canActivate: boolean;
-} & lesson;
+} & ScheduleLesson;
 
 export function calculateBusinessDays(startDate: Date, endDate: Date) {
     const vTimezoneDiff = endDate.getTimezoneOffset() - startDate.getTimezoneOffset();
@@ -48,7 +49,7 @@ export function calculateBusinessDays(startDate: Date, endDate: Date) {
     return days;
 }
 
-export function generateSchedule(schedule: schedule, start: Date, end: Date): ExtendedLesson[][] {
+export function generateSchedule(schedule: Schedule, start: Date, end: Date): SchedulerLesson[][] {
     const startDay = mod((start.getDay() - 1), 7);
     const endDay = mod((end.getDay() - 1), 7);
     const duration = calculateBusinessDays(start, end);
@@ -63,10 +64,25 @@ export function generateSchedule(schedule: schedule, start: Date, end: Date): Ex
         throw new Error('End date cannot be saturday or sunday');
     }
 
-    const lessons: ExtendedLesson[][] = [];
+    const lessons: SchedulerLesson[][] = [];
 
+    const currentDate = start;
     for (let i = startDay; i < duration + startDay; i++) {
-        lessons.push(schedule.lessons[mod(i, 5)].map(l => ({ ...l, canActivate: l.active })));
+        lessons.push([]);
+        const weekday = mod(i, 5);
+        for (let j = 0; j < schedule.duration.length; j++) {
+            const scheduleLesson = schedule.lessons.find(lesson => lesson.dayCode === weekday && lesson.durationCode === j);
+            lessons[i - startDay].push({
+                dayCode: weekday,
+                durationCode: j,
+                isActive: !!scheduleLesson,
+                canActivate: !!scheduleLesson,
+                date: currentDate,
+                name: scheduleLesson?.name,
+                id: uuidv4()
+            });
+        }
+        currentDate.setDate(currentDate.getDate() + (weekday === 4 ? 3 : 1));
     }
 
     return lessons;

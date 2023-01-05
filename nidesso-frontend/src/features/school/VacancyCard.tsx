@@ -1,11 +1,12 @@
-import { VacancyFormFields } from "./VacancyForm";
+import { Vacancy } from "../../models/vacancy/Vacancy";
 
-function VacancyCard(props: { vacancy: VacancyFormFields & { id: string }, onClick: () => void }) {
+function VacancyCard(props: { vacancy: Vacancy, onClick: () => void }) {
     return (
         <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:cursor-pointer duration-300"
             onClick={props.onClick}>
-            <h3>{props.vacancy.id}</h3>
-            <p>{props.vacancy.teacher.username}</p>
+            <h3>{`${props.vacancy.school.name} ${props.vacancy.startDate.toLocaleDateString()} - ${props.vacancy.endDate.toLocaleDateString()}`}</h3>
+            <p>{props.vacancy.school.name}</p>
+            <p>{props.vacancy.description}</p>
         </div>
     )
 }

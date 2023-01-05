@@ -1,7 +1,10 @@
-import { duration } from "./duration";
-import { lesson } from "./lesson";
+import { Duration } from "./Duration";
+import { ScheduleLesson } from "./Lesson";
 
-export type schedule = {
-    duration: duration[];
-    lessons: lesson[][];
+export type Schedule = {
+    id: number;
+    duration: Duration[];
+    lessons: ScheduleLesson[];
+    teacherId?: number;
+    description?: string;
 }

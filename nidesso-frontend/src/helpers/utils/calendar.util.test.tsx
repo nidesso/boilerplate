@@ -1,8 +1,10 @@
-import { schedule } from '../../models/schedule/schedule';
-import { generateSchedule } from './calendar.util';
-import { mod } from './math.util';
+import { Schedule } from '../../models/schedule/Schedule';
+import { calculateBusinessDays, generateSchedule } from './calendar.util';
 
-const testSchedule: schedule = {
+const testSchedule: Schedule = {
+  id: 0,
+  teacherId: 1,
+  description: 'Severin schedule',
   duration: [
     { start: "0815", end: "0900" },
     { start: "0910", end: "0955" },
@@ -13,89 +15,211 @@ const testSchedule: schedule = {
     { start: "1530", end: "1615" },
   ],
   lessons: [
-    [
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-    ],
-    [
-      { active: false, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-    ],
-    [
-      { active: false, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: false, name: 'Fach' },
-    ],
-    [
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-    ],
-    [
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: true, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-      { active: false, name: 'Fach' },
-    ],
+    { dayCode: 0, durationCode: 0, name: 'Fach' },
+    { dayCode: 0, durationCode: 1, name: 'Fach' },
+    { dayCode: 0, durationCode: 2, name: 'Fach' },
+    { dayCode: 1, durationCode: 4, name: 'Fach' },
+    { dayCode: 1, durationCode: 5, name: 'Fach' },
+    { dayCode: 1, durationCode: 6, name: 'Fach' },
+    { dayCode: 2, durationCode: 0, name: 'Fach' },
+    { dayCode: 2, durationCode: 1, name: 'Fach' },
+    { dayCode: 2, durationCode: 5, name: 'Fach' },
+    { dayCode: 2, durationCode: 6, name: 'Fach' },
+    { dayCode: 4, durationCode: 2, name: 'Fach' },
+    { dayCode: 4, durationCode: 3, name: 'Fach' },
+    { dayCode: 4, durationCode: 4, name: 'Fach' },
+    { dayCode: 4, durationCode: 5, name: 'Fach' },
   ]
 }
 
+describe("Calculate business days", () => {
+  test("Should calculate a week without weekends", () => {
+    const startDate = new Date('2023-01-02');
+    const endDate = new Date('2023-01-06');
+
+    const bdays = calculateBusinessDays(startDate, endDate);
+
+    expect(bdays).toEqual(5);
+  });
+
+  test("Should calculate days with weekend", () => {
+    const startDate = new Date('2023-01-05');
+    const endDate = new Date('2023-01-10');
+
+    const bdays = calculateBusinessDays(startDate, endDate);
+
+    expect(bdays).toEqual(4);
+  });
+
+  test("Should calculate days with 2 weekends", () => {
+    const startDate = new Date('2023-01-06');
+    const endDate = new Date('2023-01-19');
+
+    const bdays = calculateBusinessDays(startDate, endDate);
+
+    expect(bdays).toEqual(10);
+  });
+
+  test("Should calculate days with month change", () => {
+    const startDate = new Date('2023-01-27');
+    const endDate = new Date('2023-02-02');
+
+    const bdays = calculateBusinessDays(startDate, endDate);
+
+    expect(bdays).toEqual(5);
+  });
+
+  test("Should calculate days with wrong input", () => {
+    const startDate = new Date('2023-01-16');
+    const endDate = new Date('2023-01-05');
+
+    const bdays = calculateBusinessDays(startDate, endDate);
+
+    expect(bdays).toEqual(0);
+  });
+});
+
 describe("Schedule Util", () => {
   test("Should generate a lesson plan from monday", () => {
-    const lessonPlan = generateSchedule(testSchedule, new Date('2023-01-02'), new Date('2023-01-04'));
+    const startDate = new Date('2023-01-02');
+    const endDate = new Date('2023-01-04');
+    const lessonPlan = generateSchedule(testSchedule, startDate, endDate);
 
     expect(lessonPlan.length).toEqual(3);
     lessonPlan.forEach(lessons => expect(lessons.length).toEqual(testSchedule.duration.length));
-    lessonPlan.forEach((lessons, idx) => lessons.forEach((lesson, id) => {
-      expect(lesson.active).toEqual(testSchedule.lessons[idx][id].active);
-      expect(lesson.name).toEqual(testSchedule.lessons[idx][id].name);
-      expect(lesson.canActivate).toEqual(testSchedule.lessons[idx][id].active);
-    }));
+
+    const activeLessons = lessonPlan.map(lessons => lessons
+      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .flatMap(l => l);
+
+    const inactiveLessons = lessonPlan.map(lessons => lessons
+      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .flatMap(l => l);
+
+    expect(activeLessons.length).toEqual(10);
+    expect(inactiveLessons.length).toEqual(11);
+
+    activeLessons
+      .forEach((lesson) => {
+        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)!;
+        expect(lesson.isActive).toEqual(true);
+        expect(lesson.name).toEqual(testLesson.name);
+      });
+
+    inactiveLessons
+      .forEach((lesson) => {
+        expect(lesson.isActive).toEqual(false);
+        expect(lesson.name).toBeUndefined();
+      });
+
+    const currentDate = startDate;
+    for (let i = 0; i < lessonPlan.length; i++) {
+      const weekday = i % 5;
+      lessonPlan[i].forEach((lesson, idx) => {
+        expect(lesson.dayCode).toEqual(weekday);
+        expect(lesson.durationCode).toEqual(idx);
+        expect(lesson.date).toEqual(currentDate);
+      });
+
+      // Increase the date
+      currentDate.setDate(currentDate.getDate() + (weekday === 4 ? 3 : 1));
+    }
   });
 
   test("Should generate a lesson plan from wednesday over the weekend", () => {
-    const lessonPlan = generateSchedule(testSchedule, new Date('2023-01-04'), new Date('2023-01-09'));
+    const startDate = new Date('2023-01-04');
+    const endDate = new Date('2023-01-09');
+    const lessonPlan = generateSchedule(testSchedule, startDate, endDate);
 
     expect(lessonPlan.length).toEqual(4);
     lessonPlan.forEach(lessons => expect(lessons.length).toEqual(testSchedule.duration.length));
-    lessonPlan.forEach((lessons, idx) => lessons.forEach((lesson, id) => {
-      expect(lesson.active).toEqual(testSchedule.lessons[mod((idx + 2), 5)][id].active);
-      expect(lesson.name).toEqual(testSchedule.lessons[mod((idx + 2), 5)][id].name);
-      expect(lesson.canActivate).toEqual(testSchedule.lessons[mod((idx + 2), 5)][id].active);
-    }));
+
+    const activeLessons = lessonPlan.map(lessons => lessons
+      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .flatMap(l => l);
+
+    const inactiveLessons = lessonPlan.map(lessons => lessons
+      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .flatMap(l => l);
+
+    expect(activeLessons.length).toEqual(11);
+    expect(inactiveLessons.length).toEqual(17);
+
+    activeLessons
+      .forEach((lesson) => {
+        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)!;
+        expect(lesson.isActive).toEqual(true);
+        expect(lesson.name).toEqual(testLesson.name);
+      });
+
+    inactiveLessons
+      .forEach((lesson) => {
+        expect(lesson.isActive).toEqual(false);
+        expect(lesson.name).toBeUndefined();
+      });
+
+    const currentDate = startDate;
+    for (let i = 0; i < lessonPlan.length; i++) {
+      const weekday = (i + 2) % 5;
+      lessonPlan[i].forEach((lesson, idx) => {
+        expect(lesson.dayCode).toEqual(weekday);
+        expect(lesson.durationCode).toEqual(idx);
+        expect(lesson.date).toEqual(currentDate);
+      });
+
+      // Increase the date
+      currentDate.setDate(currentDate.getDate() + (weekday === 4 ? 3 : 1));
+    }
   });
 
   test("Should generate a long lesson plan", () => {
-    const lessonPlan = generateSchedule(testSchedule, new Date('2023-01-06'), new Date('2023-01-31'));
+    const startDate = new Date('2023-01-06');
+    const endDate = new Date('2023-01-31');
+    const lessonPlan = generateSchedule(testSchedule, startDate, endDate);
 
     expect(lessonPlan.length).toEqual(18);
     lessonPlan.forEach(lessons => expect(lessons.length).toEqual(testSchedule.duration.length));
-    lessonPlan.forEach((lessons, idx) => lessons.forEach((lesson, id) => {
-      expect(lesson.active).toEqual(testSchedule.lessons[mod((idx + 4), 5)][id].active);
-      expect(lesson.name).toEqual(testSchedule.lessons[mod((idx + 4), 5)][id].name);
-      expect(lesson.canActivate).toEqual(testSchedule.lessons[mod((idx + 4), 5)][id].active);
-    }));
+
+    const activeLessons = lessonPlan.map(lessons => lessons
+      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .flatMap(l => l);
+
+    const inactiveLessons = lessonPlan.map(lessons => lessons
+      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .flatMap(l => l);
+
+    expect(activeLessons.length).toEqual(52);
+    expect(inactiveLessons.length).toEqual(74);
+
+    activeLessons
+      .forEach((lesson) => {
+        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)!;
+        expect(lesson.isActive).toEqual(true);
+        expect(lesson.name).toEqual(testLesson.name);
+      });
+
+    inactiveLessons
+      .forEach((lesson) => {
+        expect(lesson.isActive).toEqual(false);
+        expect(lesson.name).toBeUndefined();
+      });
+
+    const currentDate = startDate;
+    for (let i = 0; i < lessonPlan.length; i++) {
+      const weekday = (i + 4) % 5;
+      lessonPlan[i].forEach((lesson, idx) => {
+        expect(lesson.dayCode).toEqual(weekday);
+        expect(lesson.durationCode).toEqual(idx);
+        expect(lesson.date).toEqual(currentDate);
+      });
+
+      // Increase the date
+      currentDate.setDate(currentDate.getDate() + (weekday === 4 ? 3 : 1));
+    }
+
+    lessonPlan.forEach(l => {
+      console.log(l[0].date);
+    })
   });
 
   test("Should fail if generated for start on saturday", () => {

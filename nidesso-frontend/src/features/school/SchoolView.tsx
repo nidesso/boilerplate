@@ -4,22 +4,36 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
+import { CreateVacancy, Vacancy } from "../../models/vacancy/Vacancy";
 import VacancyCard from "./VacancyCard";
 import VacancyForm, { VacancyFormFields } from "./VacancyForm";
 
-function School() {
-    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: VacancyFormFields }>({ isOpen: false });
-    const [vacancies, setVacancies] = useState<(VacancyFormFields & { id: string })[]>([]);
+function SchoolView() {
+    const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: Vacancy }>({ isOpen: false });
+    const [vacancies, setVacancies] = useState<Vacancy[]>([]);
 
     useEffect(() => {
         api.getVacancies()
-            .then(data => setVacancies(data.map(v => ({ ...v, id: crypto.randomUUID() }))))
+            .then(data => setVacancies(data));
     }, [])
 
+    const reload = () => {
+        api.getVacancies()
+            .then(data => setVacancies(data));
+    }
+
     const onSubmit = (data: VacancyFormFields) => {
-        api.createVacancy(data)
-            .then(() => setVacancies([...vacancies, { ...data, id: crypto.randomUUID() }]))
-            .then(() => setDialogState({ isOpen: false }));
+        const vacancy: CreateVacancy = {
+            absentTeacherId: data.teacher.id,
+            startDate: new Date(data.start),
+            endDate: new Date(data.end),
+            scheduleId: 0,
+            description: data.description,
+            lessons: []
+        };
+        api.createVacancy(vacancy)
+            .then(() => setDialogState({ isOpen: false }))
+            .then(() => reload());
     }
 
     return (
@@ -61,4 +75,4 @@ function School() {
     );
 }
 
-export default School;
+export default SchoolView;

@@ -1,4 +1,4 @@
-export type duration = {
+export type Duration = {
     start: string;
     end: string;
 }

@@ -1,14 +1,14 @@
 import { CheckIcon, PlusIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import { forwardRef } from "react";
-import { ExtendedLesson } from "../helpers/utils/calendar.util";
 import { mod } from "../helpers/utils/math.util";
+import { SchedulerLesson } from "../models/schedule/Lesson";
 
 export type SchedulerInputProps = {
-    lessons: ExtendedLesson[][];
+    lessons: SchedulerLesson[][];
     startDate: Date;
     className?: string;
-    setValue: (lessons: ExtendedLesson[][]) => void
+    setValue: (lessons: SchedulerLesson[][]) => void
 }
 
 const weekdays = [
@@ -26,10 +26,10 @@ const Scheduler = forwardRef(({
     setValue,
 }: SchedulerInputProps, ref) => {
 
-    const toggleActive = (lesson: ExtendedLesson, day: number) => {
+    const toggleActive = (lesson: SchedulerLesson, day: number) => {
         const newLessons = [...lessons];
         const idx = lessons[day].indexOf(lesson);
-        newLessons[day][idx] = { ...lesson, active: !lesson.active };
+        newLessons[day][idx] = { ...lesson, isActive: !lesson.isActive };
         setValue(newLessons);
     }
 
@@ -44,7 +44,7 @@ const Scheduler = forwardRef(({
                             <div key={day} className="flex flex-col flex-grow flex-shrink-1 basis-0">
                                 <div key={`${day}_weekday`} className="self-center">{weekdays[getWeekDay(day)].shortName}</div>
                                 {dayLessons.map((dayLesson, durationId) => (
-                                    dayLesson.active ?
+                                    dayLesson.isActive ?
                                         <div
                                             key={`${day}_${durationId}`}
                                             className={classNames(
@@ -73,7 +73,7 @@ const Scheduler = forwardRef(({
                     ))
                 }
             </div>
-            {lessons.every(l => l.every(ll => !ll.active)) && <div className="text-sm text-red-600">Mindestens eine Lektion muss selektiert sein</div>}
+            {lessons.every(l => l.every(ll => !ll.isActive)) && <div className="text-sm text-red-600">Mindestens eine Lektion muss selektiert sein</div>}
         </>
     );
 })
