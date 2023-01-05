@@ -1,18 +1,19 @@
 package ch.nidesso.matching.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import com.fasterxml.jackson.databind.BeanDescription
+import jakarta.persistence.*
+import org.hibernate.annotations.UuidGenerator
+import java.time.Duration
+import java.util.*
 
 @Entity
 data class Schedule(
-    var test: String = "",
+    var description: String = "",
 
-    @OneToMany
-    var lessons: MutableSet<Lesson> = mutableSetOf(),
+    @ManyToOne var teacher: Teacher = Teacher(),
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @OneToMany var lessons: MutableSet<LessonSchedule> = mutableSetOf(),
+    @OneToMany var duration: MutableSet<TimeSpan> = mutableSetOf(),
+
+    @Id @GeneratedValue(generator = "UUID") @UuidGenerator val id: UUID? = null,
 )

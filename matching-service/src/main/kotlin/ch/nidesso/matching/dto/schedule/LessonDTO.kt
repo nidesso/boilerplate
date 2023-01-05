@@ -2,8 +2,9 @@ package ch.nidesso.matching.dto.schedule
 
 import java.util.*
 
-data class LessonDTO(
-    val dayId: Int,
-    val lessonId: Int,
-    val name: Optional<String>
+data class LessonScheduleDTO(
+    val id: UUID?,
+    val dayCode: Number,
+    val lessonCode: Number,
+    val name: Optional<String>,
 )

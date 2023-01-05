@@ -1,7 +1,8 @@
 package ch.nidesso.matching.entity
 
 import jakarta.persistence.*
-
+import org.hibernate.annotations.UuidGenerator
+import java.util.*
 
 
 @Entity
@@ -14,12 +15,12 @@ data class School(
     @OneToMany
     val teachers: MutableSet<Teacher> = mutableSetOf(),
 
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.PERSIST])
     val addresses: MutableSet<Address> = mutableSetOf(),
 
     @OneToMany
     val schedules: MutableSet<Schedule> = mutableSetOf(),
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
-)
+    @Id @GeneratedValue(generator = "UUID") @UuidGenerator val id: UUID? = null,
+
+    )

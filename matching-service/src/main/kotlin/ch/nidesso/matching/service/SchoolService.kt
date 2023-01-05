@@ -3,6 +3,7 @@ package ch.nidesso.matching.service
 import ch.nidesso.matching.entity.Address
 import ch.nidesso.matching.entity.School
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class SchoolService(
@@ -11,11 +12,11 @@ class SchoolService(
     val schoolRepository: SchoolRepository,
 ) {
 
-    fun save(school: School) {
-        schoolRepository.save(school)
-    }
 
-    fun addAddress(schoolId: Long, address: Address){
+    fun addSchool(school: School): School = schoolRepository.save(school)
+
+
+    fun addAddress(schoolId: UUID, address: Address) {
         addressRepository.save(address)
 
         val school = schoolRepository.findById(schoolId).get()
@@ -23,12 +24,18 @@ class SchoolService(
         schoolRepository.save(school)
     }
 
-    fun addTeacher(schoolId: Long, teacherId: Long) {
+
+    fun addTeacher(schoolId: UUID, teacherId: UUID) {
         val teacher = teacherRepository.findById(teacherId).get();
         val school = schoolRepository.findById(schoolId).get()
 
         school.teachers.add(teacher)
         schoolRepository.save(school)
+    }
+
+
+    fun remove(schoolId: UUID) {
+        schoolRepository.deleteById(schoolId)
     }
 
 }

@@ -1,22 +1,20 @@
 package ch.nidesso.matching.entity
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import jakarta.persistence.*
+import org.hibernate.annotations.UuidGenerator
+import java.util.*
 
 
 @Entity
 data class Vacancy(
 
-
-
-
     @ManyToOne var school: School = School(),
+    @ManyToOne val schedule: Schedule = Schedule(),
 
     @ManyToMany val teachers: MutableSet<Teacher> = mutableSetOf(),
+    @OneToMany val lessons: MutableSet<LessonVacancy> = mutableSetOf(),
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
+    @Id @GeneratedValue(generator = "UUID") @UuidGenerator val id: UUID? = null,
 ) {
     fun addTeacher(teacher: Teacher) {
         this.teachers.add(teacher);
