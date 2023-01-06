@@ -4,7 +4,6 @@ import ch.nidesso.matching.dto.schedule.*
 import ch.nidesso.matching.entity.*
 import java.util.*
 
-
 fun TeacherDTO.toEntity() = Teacher(
     name, lastname,
     phone, email,
@@ -39,7 +38,12 @@ fun LessonScheduleDTO.toEntity() = LessonSchedule(
     dayCode, lessonCode, name.orElse(""), id
 )
 
-fun LessonSchedule.toDto() = LessonScheduleDTO(id!!, dayCode, lessonCode, Optional.of(name))
+fun LessonSchedule.toDto() = LessonScheduleDTO(
+    id = id!!,
+    dayCode = dayCode,
+    lessonCode = lessonCode,
+    Optional.of(name)
+)
 
 
 fun CreateScheduleDTO.toEntity() = Schedule(

@@ -22,5 +22,4 @@ data class School(
     val schedules: MutableSet<Schedule> = mutableSetOf(),
 
     @Id @GeneratedValue(generator = "UUID") @UuidGenerator val id: UUID? = null,
-
-    )
+)

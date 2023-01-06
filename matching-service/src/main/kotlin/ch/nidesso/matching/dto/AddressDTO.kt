@@ -1,7 +1,6 @@
 package ch.nidesso.matching.dto
 
-import ch.nidesso.matching.entity.Address
-import java.util.UUID
+import java.util.*
 
 data class AddressDTO (
     val id: UUID?,
