@@ -1,62 +1,60 @@
 package ch.nidesso.matching.service
 
-import ch.nidesso.matching.entity.Address
-import ch.nidesso.matching.entity.School
-import ch.nidesso.matching.entity.Teacher
-import ch.nidesso.matching.entity.Vacancy
+import ch.nidesso.matching.entity.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import java.time.Duration
 
 @SpringBootTest
 class VacancyEntityServiceTest @Autowired constructor(
-    var teacherRepository: TeacherRepository,
-    var teacherService: TeacherService,
-    var schoolService: SchoolService,
-    var vacancyRepository: VacancyRepository,
-    var vacancyService: VacancyService,
+    val vacancyService: VacancyService,
+    val schoolService: SchoolService,
+    val scheduleService: ScheduleService,
+    val teacherService: TeacherService
 ) {
 
 
-    @Disabled
     @Test
-    fun shoulSaveVacancy() {
+    fun shouldAddVacancy() {
+        val school = schoolService.addSchool(School("s1"));
+        val teacher = teacherService.addTeacher(Teacher(name = "abs"))
+        val appTeacher = teacherService.addTeacher(Teacher(name = "ta"))
 
-        val a1 = Address("street1", "city", "1234")
+        val schedule = scheduleService.addSchedule(
+            school.id!!,
+            Schedule(
+                "test",
+                teacher,
+                lessons = mutableSetOf(LessonSchedule(1, 2, "test"))
+            )
+        )
 
-        schoolService.addSchool(School("name"))
-        teacherService.addTeacher(Teacher("lehrer 1", address = a1))
+        val res = vacancyService.addVacancy(
+            school.id!!, Vacancy(
+                school = school,
+                schedule = schedule,
+                absentTeacher = teacher,
+                duration = TimeSpan("", ""),
+                teacherApplications = mutableSetOf(),
+                lessons = mutableSetOf(LessonVacancy(), LessonVacancy()),
+                )
+        )
 
-        val school = schoolService.schoolRepository.findAll()[0]
-        val teacher = teacherRepository.findAll()[0]
+        vacancyService.vacancyRepository.findAll().let {
+            assertEquals(1, it.size)
+        }
 
-        vacancyService.save(Vacancy(school))
-
-        val id = vacancyRepository.findAll()[0].id!!
-        vacancyService.addTeacher(id, teacher.id!!)
-
-        teacherRepository
-            .findAll()[0]
-            .let {
-                assertEquals(1, it.vacancies.size)
-                assertEquals(1, it.vacancies.toList()[0].id)
-            }
-
-        schoolService.schoolRepository.findAll()[0].let {
+        schoolService.schoolRepository.findById(school.id!!).get().let {
             assertEquals(1, it.vacancies.size)
         }
 
-        vacancyRepository
-            .findAll()
-            .let {
-                assertEquals(1, it.size)
-                assertEquals(1, it[0].teachers.size)
-                assertEquals(1, it[0].school.id)
-            }
-
-
+        vacancyService.addTeacherApplication(res.id!!, appTeacher.id!!)
+        vacancyService.vacancyRepository.findById(res.id!!).get().let {
+            assertEquals(1, it.teacherApplications.size)
+        }
     }
 
 

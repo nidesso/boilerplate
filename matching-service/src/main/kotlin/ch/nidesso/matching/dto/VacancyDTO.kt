@@ -1,17 +1,22 @@
 package ch.nidesso.matching.dto
 
-import ch.nidesso.matching.dto.schedule.LessonScheduleDTO
-
+import ch.nidesso.matching.dto.schedule.LessonVacancyDTO
+import ch.nidesso.matching.dto.schedule.ScheduleDTO
+import ch.nidesso.matching.dto.schedule.TimeSpanDTO
+import java.util.*
 
 data class VacancyDTO(
-    val id: Long?,
+    val id: UUID?,
 
-    val scheduleId: Long,
-    val teacherId: Long,
+    val schedule: ScheduleDTO,
 
-    var schoolId: Long,
-    val lessons: List<LessonScheduleDTO>,
-) {
+    val teacherApplicationIds: List<UUID>,
+    val absentTeacher: TeacherDTO,
+
+    val duration: TimeSpanDTO,
+
+    var schoolId: UUID,
+    val lessons: List<LessonVacancyDTO>,
+)
 
 
-}
