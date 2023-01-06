@@ -8,3 +8,11 @@ data class AddressDTO (
     val city: String,
     val postalCode: String,
 )
+
+
+
+data class CreateAddressDTO (
+    val street: String,
+    val city: String,
+    val postalCode: String,
+)

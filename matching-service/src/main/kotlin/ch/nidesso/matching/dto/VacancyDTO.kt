@@ -20,3 +20,11 @@ data class VacancyDTO(
 )
 
 
+data class CreateVacancyDTO (
+    val scheduleId: UUID,
+    val absentTeacherId: UUID,
+    val duration: TimeSpanDTO,
+    val lessons: List<LessonVacancyDTO>,
+)
+
+

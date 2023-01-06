@@ -12,11 +12,10 @@ fun TeacherDTO.toEntity() = Teacher(
 )
 
 fun Teacher.toDto() = TeacherDTO(id!!, name, lastname, phone, email, address.toDto())
+
 fun AddressDTO.toEntity() = Address(street, city, postalCode, id)
 fun Address.toDto() = AddressDTO(id!!, street, city, postalCode)
-
-
-
+fun CreateAddressDTO.toEntity() = Address(street, city, postalCode)
 fun CreateSchoolDTO.toEntity() = School(
     name = name,
     addresses = addresses.map { a -> a.toEntity() }.toMutableSet(),
@@ -73,7 +72,9 @@ fun TimeSpan.toDto() = TimeSpanDTO(starttime, endtime)
 fun TimeSpanDTO.toEntity() = TimeSpan(startTime, endTime)
 
 fun LessonVacancyDTO.toEntity() = LessonVacancy(dayCode, lessonCode, name.orElse(""), date, id = id)
-fun LessonVacancy.toDto() = LessonVacancyDTO(id, dayCode, lessonCode, Optional.of(name), date)
+fun LessonVacancy.toDto() = LessonVacancyDTO(
+    id, dayCode, lessonCode, Optional.of(name), date
+)
 
 
 fun VacancyDTO.toEntity() = Vacancy(
@@ -86,10 +87,18 @@ fun VacancyDTO.toEntity() = Vacancy(
     lessons = lessons.map { it.toEntity() }.toMutableSet(),
 )
 
+fun CreateVacancyDTO.toEntity() = Vacancy(
+    schedule = Schedule(id = scheduleId),
+    absentTeacher = Teacher(id = absentTeacherId),
+    duration = duration.toEntity(),
+    lessons = lessons.map { it.toEntity() }.toMutableSet(),
+)
+
 fun Vacancy.toDto() = VacancyDTO(id = id,
     schedule = schedule.toDto(),
     teacherApplicationIds = teacherApplications.map { it.id!! },
     absentTeacher = absentTeacher.toDto(),
     duration = duration.toDto(),
     schoolId = school.id!!,
-    lessons = lessons.map { it.toDto() })
+    lessons = lessons.map { it.toDto() }
+)

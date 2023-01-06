@@ -13,3 +13,14 @@ data class TeacherDTO(
 
     val address: AddressDTO
 )
+
+
+data class CreateTeacherDTO (
+
+    val name: String,
+    val lastname: String,
+    val phone: String,
+    val email: String,
+
+    val address: CreateAddressDTO
+)

@@ -6,7 +6,7 @@ import java.util.*
 
 data class CreateSchoolDTO(
     val name: String,
-    val addresses: List<AddressDTO>,
+    val addresses: List<CreateAddressDTO>,
 )
 
 
