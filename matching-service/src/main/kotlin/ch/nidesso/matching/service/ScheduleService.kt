@@ -31,17 +31,23 @@ class ScheduleService(
             it.schedules.add(result)
             schoolRepository.save(it)
         }
-
         return result
-
     }
-
 
     fun findBySchoolId(schoolId: UUID) = schoolRepository
         .findById(schoolId)
         .get()
         .schedules
         .map { s -> s.toDto() }
+
+
+    fun findBySchoolIdAndTeacherId(schoolId: UUID, teacherId: UUID) =
+        schoolRepository
+            .findById(schoolId)
+            .orElseThrow()
+            .schedules
+            .filter { it.teacher.id == teacherId }
+            .map { it.toDto() }
 
 }
 

@@ -20,6 +20,13 @@ class ScheduleResource(
         @PathVariable schoolId: UUID,
     ) = scheduleService.findBySchoolId(schoolId)
 
+    @GetMapping("/school/{schoolId}/teacher/{teacherId}/schedule/")
+    @Operation(summary = "find schedules by school id")
+    fun findScheduleByTeacher(
+        @PathVariable schoolId: UUID,
+        @PathVariable teacherId: UUID,
+    ) = scheduleService.findBySchoolIdAndTeacherId(schoolId, teacherId)
+
     @PostMapping("/school/{schoolId}/schedule/")
     @Operation(summary = "create a new scheduler on a school")
     fun create(

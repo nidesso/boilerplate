@@ -29,6 +29,7 @@ class ScheduleEntityServiceTest @Autowired constructor(
             assertEquals(1, it.schedules.size)
             assertEquals(1, it.schedules.toList().get(0).duration.size)
         }
-
     }
+
+
 }

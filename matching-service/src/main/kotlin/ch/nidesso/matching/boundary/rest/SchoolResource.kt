@@ -35,8 +35,6 @@ class SchoolResource(
         .teachers.map { it.toDto() }
 
 
-    @GetMapping("/{schoolId}/vacancy/")
-    fun findVacancyBySchool(@PathVariable schoolId: UUID) = {}
 
 
     @PostMapping

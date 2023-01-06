@@ -1,7 +1,9 @@
 package ch.nidesso.matching.boundary.rest
 
 import ch.nidesso.matching.dto.VacancyDTO
+import ch.nidesso.matching.dto.toDto
 import ch.nidesso.matching.dto.toEntity
+import ch.nidesso.matching.service.SchoolRepository
 import ch.nidesso.matching.service.VacancyRepository
 import ch.nidesso.matching.service.VacancyService
 import org.springframework.web.bind.annotation.*
@@ -11,6 +13,7 @@ import java.util.*
 @CrossOrigin
 class VacancyResource(
     val vacancyRepository: VacancyRepository,
+    val schoolRepository: SchoolRepository,
     val vacancyService: VacancyService,
 ) {
 
@@ -22,7 +25,13 @@ class VacancyResource(
         @PathVariable vacancyId: UUID,
     ) = vacancyRepository.findById(vacancyId)
 
-    @PostMapping("/school/{schoolId}/vacancy")
+    @GetMapping("/school/{schoolId}/vacancy/")
+    fun findVacancyBySchool(@PathVariable schoolId: UUID) = schoolRepository
+        .findById(schoolId)
+        .orElseThrow()
+        .vacancies.map { it.toDto() }
+
+        @PostMapping("/school/{schoolId}/vacancy")
     fun create(
         @PathVariable schoolId: UUID, @RequestBody item: VacancyDTO
     ) = vacancyService.addVacancy(schoolId, item.toEntity())
