@@ -4,6 +4,7 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
+import { School } from "../../models/school/School";
 import { CreateVacancy, Vacancy } from "../../models/vacancy/Vacancy";
 import VacancyCard from "./VacancyCard";
 import VacancyForm, { VacancyFormFields } from "./VacancyForm";
@@ -11,15 +12,24 @@ import VacancyForm, { VacancyFormFields } from "./VacancyForm";
 function SchoolView() {
     const [dialogState, setDialogState] = useState<{ isOpen: boolean; vacancy?: Vacancy }>({ isOpen: false });
     const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+    const [school, setSchool] = useState<School>();
 
     useEffect(() => {
-        api.getVacancies()
-            .then(data => setVacancies(data));
+        api.doApiCall(api.getSchools)
+            .then(schools => schools[0])
+            .then(setSchool)
     }, [])
 
+    useEffect(() => {
+        if (school) {
+            api.doApiCall(() => api.getSchoolVacancies(school.id))
+                .then(data => setVacancies(data));
+        }
+    }, [school])
+
     const reload = () => {
-        api.getVacancies()
-            .then(data => setVacancies(data));
+        api.doApiCall(() => api.getSchoolVacancies(school?.id!))
+                .then(data => setVacancies(data));
     }
 
     const onSubmit = (data: VacancyFormFields) => {
@@ -27,9 +37,9 @@ function SchoolView() {
             absentTeacherId: data.teacher.id,
             startDate: new Date(data.start),
             endDate: new Date(data.end),
-            scheduleId: 0,
+            scheduleId: data.scheduleId,
             description: data.description,
-            lessons: []
+            lessons: data.lessons
         };
         api.createVacancy(vacancy)
             .then(() => setDialogState({ isOpen: false }))
@@ -64,11 +74,13 @@ function SchoolView() {
                     <Dialog.Description className="text-gray-800 my-2">
                         Informationen ausfüllen um eine neue Ausschreibung zu erstellen
                     </Dialog.Description>
-                    <VacancyForm
+                    {school && <VacancyForm
+                        school={school}
                         onSubmit={onSubmit}
                         actions={[
                             <Button key='cancel' theme="secondary" className="ml-2" onClick={() => setDialogState({ isOpen: false })}>Abbrechen</Button>
-                        ]}></VacancyForm>
+                        ]}
+                    ></VacancyForm>}
                 </>
             </UiDialog>
         </>

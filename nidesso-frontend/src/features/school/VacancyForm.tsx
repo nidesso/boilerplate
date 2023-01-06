@@ -8,12 +8,14 @@ import api from "../../helpers/network/api";
 import { generateSchedule } from "../../helpers/utils/calendar.util";
 import { SchedulerLesson, VacancyLesson } from "../../models/schedule/Lesson";
 import { Schedule } from "../../models/schedule/Schedule";
+import { School } from "../../models/school/School";
 import { Teacher } from "../../models/teacher/Teacher";
 
 type VacancyFormProps = {
     onSubmit: (data: VacancyFormFields) => void;
     actions?: JSX.Element[];
-    vacancy?: VacancyFormFields
+    vacancy?: VacancyFormFields;
+    school: School;
 };
 
 export type VacancyFormFields = {
@@ -21,13 +23,15 @@ export type VacancyFormFields = {
     start: Date;
     end: Date;
     description: string;
+    scheduleId: string;
     lessons: VacancyLesson[]
 };
 
 function VacancyForm({
     onSubmit,
     actions,
-    vacancy
+    vacancy,
+    school
 }: VacancyFormProps) {
     const {
         register,
@@ -55,14 +59,15 @@ function VacancyForm({
         }
         onSubmit({
             ...data,
-            lessons: lessons.flatMap(l => l).filter(l => l.isActive)
+            lessons: lessons.flatMap(l => l).filter(l => l.isActive),
+            scheduleId: schedule?.id!
         });
     });
 
     useEffect(() => {
-        api.doApiCall(() => api.getTeachersOfSchool(0))
+        api.doApiCall(() => api.getTeachersOfSchool(school.id))
             .then(setTeachers);
-    }, []);
+    }, [school]);
 
     useEffect(() => {
         if (dates[0] && dates[1] && schedule) {
@@ -74,10 +79,10 @@ function VacancyForm({
 
     useEffect(() => {
         if (!!selectedTeacher) {
-            api.doApiCall(() => api.getSchedule(0, selectedTeacher?.id))
+            api.doApiCall(() => api.getSchedule(school.id, selectedTeacher.id))
                 .then(setSchedule)
         }
-    }, [selectedTeacher])
+    }, [selectedTeacher, school])
 
     return (
         <>

@@ -2,8 +2,8 @@ import { Schedule } from '../../models/schedule/Schedule';
 import { calculateBusinessDays, generateSchedule } from './calendar.util';
 
 const testSchedule: Schedule = {
-  id: 0,
-  teacherId: 1,
+  id: '0',
+  teacherId: '1',
   description: 'Severin schedule',
   duration: [
     { start: "0815", end: "0900" },
@@ -216,10 +216,6 @@ describe("Schedule Util", () => {
       // Increase the date
       currentDate.setDate(currentDate.getDate() + (weekday === 4 ? 3 : 1));
     }
-
-    lessonPlan.forEach(l => {
-      console.log(l[0].date);
-    })
   });
 
   test("Should fail if generated for start on saturday", () => {

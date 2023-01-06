@@ -12,12 +12,12 @@ export type Vacancy = {
     description?: string;
     startDate: Date;
     endDate: Date;
-    id: number;
+    id: string;
 }
 
 export type CreateVacancy = {
-    absentTeacherId: number;
-    scheduleId: number;
+    absentTeacherId: string;
+    scheduleId: string;
     lessons: VacancyLesson[];
     description?: string;
     startDate: Date;

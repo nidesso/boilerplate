@@ -6,5 +6,5 @@ export type Teacher = {
     street?: string;
     city?: string;
     postalCode?: string;
-    id: number;
+    id: string;
 }
