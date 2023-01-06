@@ -12,7 +12,7 @@ data class Teacher(
     var phone: String = "",
     var email: String = "",
 
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany
     val vacancies: MutableCollection<Vacancy> = mutableSetOf(),
 
     @ManyToOne

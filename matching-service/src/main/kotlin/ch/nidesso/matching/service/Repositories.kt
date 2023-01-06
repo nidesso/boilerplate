@@ -8,6 +8,7 @@ import java.util.UUID
 interface ScheduleRepository : JpaRepository<Schedule, UUID> {}
 
 interface LessonScheduleRepository : JpaRepository<LessonSchedule, UUID> {}
+interface LessonVacancyRepository : JpaRepository<LessonVacancy, UUID> {}
 interface TimeSpanRepository: JpaRepository<TimeSpan, UUID> {}
 interface AddressRepository : JpaRepository<Address, UUID> {}
 interface SchoolRepository : JpaRepository<School, UUID> {}

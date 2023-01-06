@@ -15,10 +15,8 @@ class ScheduleEntityServiceTest @Autowired constructor(
     fun shouldSaveSchedule() {
 
         val school = schoolService.addSchool(School("test"))
-        val lessons = mutableSetOf(LessonSchedule(1, 2, "test"))
         val teacher = teacherService.addTeacher(Teacher("t1"))
-
-        val timespan = TimeSpan()
+        val lessons = mutableSetOf(LessonSchedule(1, 2, "test"))
 
         val schedule = Schedule("test", teacher, lessons)
 
