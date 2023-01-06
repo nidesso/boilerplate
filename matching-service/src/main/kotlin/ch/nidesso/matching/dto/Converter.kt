@@ -45,15 +45,15 @@ fun LessonSchedule.toDto() = LessonScheduleDTO(id!!, dayCode, lessonCode, Option
 fun CreateScheduleDTO.toEntity() = Schedule(
     description = description,
     teacher = Teacher(id = teacherId),
-    lessons = lessons.map { l -> l.toEntity() }.toMutableSet()
-
+    lessons = lessons.map { it.toEntity() }.toMutableSet(),
+    duration = duration.map { it.toEntity() }.toMutableSet(),
 )
 
 fun Schedule.toDto() = ScheduleDTO(
     id = id!!,
     teacherId = teacher.id!!,
     description = description,
-    lessons = lessons.map { l -> l.toDto() },
+    lessons = lessons.map { it.toDto() },
     duration = duration.map { it.toDto() },
 )
 
