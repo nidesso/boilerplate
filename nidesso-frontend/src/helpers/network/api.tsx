@@ -136,7 +136,7 @@ class Api {
             .finally(() => setIsLoading(false));
     }
 
-    createVacancy(vacancy: CreateVacancy) {
+    createVacancy(vacancy: CreateVacancy, schoolId: string) {
         // vacancies.push({
         //     id: vacancies.length.toString(),
         //     absentTeacher: teachers.find(teacher => teacher.id === vacancy.absentTeacherId)!,
@@ -149,7 +149,7 @@ class Api {
         //     schedule: schedules.find(schedule => schedule.id === vacancy.scheduleId)!
         // });
         // return Promise.resolve();
-        return client.post('vacancy', vacancy)
+        return client.post(`school/${schoolId}/vacancy`, vacancy)
             .then(r => r.data);
     }
 

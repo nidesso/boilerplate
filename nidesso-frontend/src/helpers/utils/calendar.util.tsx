@@ -71,10 +71,10 @@ export function generateSchedule(schedule: Schedule, start: Date, end: Date): Sc
         lessons.push([]);
         const weekday = mod(i, 5);
         for (let j = 0; j < schedule.duration.length; j++) {
-            const scheduleLesson = schedule.lessons.find(lesson => lesson.dayCode === weekday && lesson.durationCode === j);
+            const scheduleLesson = schedule.lessons.find(lesson => lesson.dayCode === weekday && lesson.lessonCode === j);
             lessons[i - startDay].push({
                 dayCode: weekday,
-                durationCode: j,
+                lessonCode: j,
                 isActive: !!scheduleLesson,
                 canActivate: !!scheduleLesson,
                 date: currentDate,
