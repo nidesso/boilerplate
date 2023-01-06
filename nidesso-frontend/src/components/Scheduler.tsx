@@ -2,7 +2,7 @@ import { CheckIcon, PlusIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import { forwardRef } from "react";
 import { mod } from "../helpers/utils/math.util";
-import { SchedulerLesson } from "../models/schedule/Lesson";
+import { SchedulerLesson } from "../models/schedule/lesson";
 
 export type SchedulerInputProps = {
     lessons: SchedulerLesson[][];

@@ -1,4 +1,4 @@
-import { Vacancy } from "../../models/vacancy/Vacancy";
+import { Vacancy } from "../../models/vacancy/vacancy";
 
 function VacancyCard(props: { vacancy: Vacancy, onClick: () => void }) {
     return (

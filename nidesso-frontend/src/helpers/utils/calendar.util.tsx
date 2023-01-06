@@ -1,5 +1,5 @@
-import { ScheduleLesson, SchedulerLesson } from "../../models/schedule/Lesson";
-import { Schedule } from "../../models/schedule/Schedule";
+import { ScheduleLesson, SchedulerLesson } from "../../models/schedule/lesson";
+import { Schedule } from "../../models/schedule/schedule";
 import { mod } from "./math.util";
 import { v4 as uuidv4 } from 'uuid';
 

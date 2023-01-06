@@ -1,5 +1,5 @@
-import { Duration } from "./Duration";
-import { ScheduleLesson } from "./Lesson";
+import { Duration } from "./duration";
+import { ScheduleLesson } from "./lesson";
 
 export type Schedule = {
     id: string;

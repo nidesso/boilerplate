@@ -6,10 +6,10 @@ import { FormInput } from "../../components/ui-lib/form/FormInput";
 import FormListBox from "../../components/ui-lib/form/FormListBox";
 import api from "../../helpers/network/api";
 import { generateSchedule } from "../../helpers/utils/calendar.util";
-import { SchedulerLesson, VacancyLesson } from "../../models/schedule/Lesson";
-import { Schedule } from "../../models/schedule/Schedule";
-import { School } from "../../models/school/School";
-import { Teacher } from "../../models/teacher/Teacher";
+import { SchedulerLesson, VacancyLesson } from "../../models/schedule/lesson";
+import { Schedule } from "../../models/schedule/schedule";
+import { School } from "../../models/school/school";
+import { Teacher } from "../../models/teacher/teacher";
 
 type VacancyFormProps = {
     onSubmit: (data: VacancyFormFields) => void;

@@ -1,7 +1,7 @@
-import { VacancyLesson } from "../schedule/Lesson";
-import { Schedule } from "../schedule/Schedule";
-import { School } from "../school/School";
-import { Teacher } from "../teacher/Teacher";
+import { VacancyLesson } from "../schedule/lesson";
+import { Schedule } from "../schedule/schedule";
+import { School } from "../school/school";
+import { Teacher } from "../teacher/teacher";
 
 export type Vacancy = {
     school: School;

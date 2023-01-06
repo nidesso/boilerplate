@@ -4,7 +4,7 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
-import { Vacancy } from "../../models/vacancy/Vacancy";
+import { Vacancy } from "../../models/vacancy/vacancy";
 import VacancyCard from "../school/VacancyCard";
 
 function TeacherView() {

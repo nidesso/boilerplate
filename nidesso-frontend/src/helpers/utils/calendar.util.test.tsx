@@ -1,4 +1,4 @@
-import { Schedule } from '../../models/schedule/Schedule';
+import { Schedule } from '../../models/schedule/schedule';
 import { calculateBusinessDays, generateSchedule } from './calendar.util';
 
 const testSchedule: Schedule = {

@@ -4,8 +4,8 @@ import FullWidthContainer from "../../components/FullWidthContainer";
 import Button from "../../components/ui-lib/Button";
 import UiDialog from "../../components/ui-lib/UiDialog";
 import api from "../../helpers/network/api";
-import { School } from "../../models/school/School";
-import { CreateVacancy, Vacancy } from "../../models/vacancy/Vacancy";
+import { School } from "../../models/school/school";
+import { CreateVacancy, Vacancy } from "../../models/vacancy/vacancy";
 import VacancyCard from "./VacancyCard";
 import VacancyForm, { VacancyFormFields } from "./VacancyForm";
 

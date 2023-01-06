@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Schedule } from '../../models/schedule/Schedule';
-import { School } from '../../models/school/School';
-import { Teacher } from '../../models/teacher/Teacher';
-import { CreateVacancy, Vacancy } from '../../models/vacancy/Vacancy';
+import { Schedule } from '../../models/schedule/schedule';
+import { School } from '../../models/school/school';
+import { Teacher } from '../../models/teacher/teacher';
+import { CreateVacancy, Vacancy } from '../../models/vacancy/vacancy';
 
 export const client = axios.create({
     baseURL: process.env.REACT_APP_API_ENDPOINT
