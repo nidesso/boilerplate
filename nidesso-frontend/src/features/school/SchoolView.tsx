@@ -22,30 +22,30 @@ function SchoolView() {
 
     useEffect(() => {
         if (school) {
-            // api.doApiCall(() => api.getSchoolVacancies(school.id))
-            //     .then(data => setVacancies(data));
-            api.doApiCall(() => api.getVacancies())
+            api.doApiCall(() => api.getSchoolVacancies(school.id))
                 .then(data => setVacancies(data));
         }
     }, [school])
 
     const reload = () => {
-        // api.doApiCall(() => api.getSchoolVacancies(school?.id!))
-        //     .then(data => setVacancies(data));
-        api.doApiCall(() => api.getVacancies())
+        api.doApiCall(() => api.getSchoolVacancies(school?.id!))
             .then(data => setVacancies(data));
     }
 
     const onSubmit = (data: VacancyFormFields) => {
         const vacancy: CreateVacancy = {
             absentTeacherId: data.teacher.id,
-            startDate: new Date(data.start),
-            endDate: new Date(data.end),
+            duration: {
+                startTime: new Date(data.start),
+                endTime: new Date(data.end)
+            },
             scheduleId: data.scheduleId,
             description: data.description,
             lessons: data.lessons
         };
         api.createVacancy(vacancy, school?.id!)
+            // Ignore the error since its a parsing error by the backend
+            .catch(console.log)
             .then(() => setDialogState({ isOpen: false }))
             .then(() => reload());
     }

@@ -6,13 +6,34 @@ const testSchedule: Schedule = {
   teacherId: '1',
   description: 'Severin schedule',
   duration: [
-    { startTime: "0815", endTime: "0900" },
-    { startTime: "0910", endTime: "0955" },
-    { startTime: "1015", endTime: "1100" },
-    { startTime: "1110", endTime: "1155" },
-    { startTime: "1330", endTime: "1415" },
-    { startTime: "1425", endTime: "1510" },
-    { startTime: "1530", endTime: "1615" },
+    {
+      startTime: new Date("2023-01-06T08:00:00.000Z"),
+      endTime: new Date("2023-01-06T09:00:00.000Z")
+    },
+    {
+      startTime: new Date("2023-01-06T09:10:00.000Z"),
+      endTime: new Date("2023-01-06T09:55:00.000Z")
+    },
+    {
+      startTime: new Date("2023-01-06T10:15:00.000Z"),
+      endTime: new Date("2023-01-06T11:00:00.000Z")
+    },
+    {
+      startTime: new Date("2023-01-06T11:10:00.000Z"),
+      endTime: new Date("2023-01-06T11:55:00.000Z")
+    },
+    {
+      startTime: new Date("2023-01-06T13:30:00.000Z"),
+      endTime: new Date("2023-01-06T14:15:00.000Z")
+    },
+    {
+      startTime: new Date("2023-01-06T14:25:00.000Z"),
+      endTime: new Date("2023-01-06T15:10:00.000Z")
+    },
+    {
+      startTime: new Date("2023-01-06T15:30:00.000Z"),
+      endTime: new Date("2023-01-06T16:15:00.000Z")
+    }
   ],
   lessons: [
     { dayCode: 0, lessonCode: 0, name: 'Fach' },

@@ -1,4 +1,4 @@
 export type Duration = {
-    startTime: string;
-    endTime: string;
+    startTime: Date;
+    endTime: Date;
 }

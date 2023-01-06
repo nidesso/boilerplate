@@ -39,7 +39,7 @@ function TeacherView() {
             </main>
             <UiDialog open={dialogState.isOpen} onClose={() => setDialogState({ isOpen: false })}>
                 <>
-                    <Dialog.Title as="h3">{dialogState.vacancy?.startDate.toString()}</Dialog.Title>
+                    <Dialog.Title as="h3">{dialogState.vacancy?.duration.startTime.toString()}</Dialog.Title>
                     <Dialog.Description className="text-gray-800 my-2">
                         {dialogState.vacancy?.absentTeacher?.name}
                     </Dialog.Description>
