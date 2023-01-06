@@ -22,14 +22,18 @@ function SchoolView() {
 
     useEffect(() => {
         if (school) {
-            api.doApiCall(() => api.getSchoolVacancies(school.id))
+            // api.doApiCall(() => api.getSchoolVacancies(school.id))
+            //     .then(data => setVacancies(data));
+            api.doApiCall(() => api.getVacancies())
                 .then(data => setVacancies(data));
         }
     }, [school])
 
     const reload = () => {
-        api.doApiCall(() => api.getSchoolVacancies(school?.id!))
-                .then(data => setVacancies(data));
+        // api.doApiCall(() => api.getSchoolVacancies(school?.id!))
+        //     .then(data => setVacancies(data));
+        api.doApiCall(() => api.getVacancies())
+            .then(data => setVacancies(data));
     }
 
     const onSubmit = (data: VacancyFormFields) => {
@@ -41,7 +45,7 @@ function SchoolView() {
             description: data.description,
             lessons: data.lessons
         };
-        api.createVacancy(vacancy)
+        api.createVacancy(vacancy, school?.id!)
             .then(() => setDialogState({ isOpen: false }))
             .then(() => reload());
     }

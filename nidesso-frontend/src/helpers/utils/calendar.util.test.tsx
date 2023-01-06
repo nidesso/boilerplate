@@ -6,29 +6,29 @@ const testSchedule: Schedule = {
   teacherId: '1',
   description: 'Severin schedule',
   duration: [
-    { start: "0815", end: "0900" },
-    { start: "0910", end: "0955" },
-    { start: "1015", end: "1100" },
-    { start: "1110", end: "1155" },
-    { start: "1330", end: "1415" },
-    { start: "1425", end: "1510" },
-    { start: "1530", end: "1615" },
+    { startTime: "0815", endTime: "0900" },
+    { startTime: "0910", endTime: "0955" },
+    { startTime: "1015", endTime: "1100" },
+    { startTime: "1110", endTime: "1155" },
+    { startTime: "1330", endTime: "1415" },
+    { startTime: "1425", endTime: "1510" },
+    { startTime: "1530", endTime: "1615" },
   ],
   lessons: [
-    { dayCode: 0, durationCode: 0, name: 'Fach' },
-    { dayCode: 0, durationCode: 1, name: 'Fach' },
-    { dayCode: 0, durationCode: 2, name: 'Fach' },
-    { dayCode: 1, durationCode: 4, name: 'Fach' },
-    { dayCode: 1, durationCode: 5, name: 'Fach' },
-    { dayCode: 1, durationCode: 6, name: 'Fach' },
-    { dayCode: 2, durationCode: 0, name: 'Fach' },
-    { dayCode: 2, durationCode: 1, name: 'Fach' },
-    { dayCode: 2, durationCode: 5, name: 'Fach' },
-    { dayCode: 2, durationCode: 6, name: 'Fach' },
-    { dayCode: 4, durationCode: 2, name: 'Fach' },
-    { dayCode: 4, durationCode: 3, name: 'Fach' },
-    { dayCode: 4, durationCode: 4, name: 'Fach' },
-    { dayCode: 4, durationCode: 5, name: 'Fach' },
+    { dayCode: 0, lessonCode: 0, name: 'Fach' },
+    { dayCode: 0, lessonCode: 1, name: 'Fach' },
+    { dayCode: 0, lessonCode: 2, name: 'Fach' },
+    { dayCode: 1, lessonCode: 4, name: 'Fach' },
+    { dayCode: 1, lessonCode: 5, name: 'Fach' },
+    { dayCode: 1, lessonCode: 6, name: 'Fach' },
+    { dayCode: 2, lessonCode: 0, name: 'Fach' },
+    { dayCode: 2, lessonCode: 1, name: 'Fach' },
+    { dayCode: 2, lessonCode: 5, name: 'Fach' },
+    { dayCode: 2, lessonCode: 6, name: 'Fach' },
+    { dayCode: 4, lessonCode: 2, name: 'Fach' },
+    { dayCode: 4, lessonCode: 3, name: 'Fach' },
+    { dayCode: 4, lessonCode: 4, name: 'Fach' },
+    { dayCode: 4, lessonCode: 5, name: 'Fach' },
   ]
 }
 
@@ -89,11 +89,11 @@ describe("Schedule Util", () => {
     lessonPlan.forEach(lessons => expect(lessons.length).toEqual(testSchedule.duration.length));
 
     const activeLessons = lessonPlan.map(lessons => lessons
-      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)))
       .flatMap(l => l);
 
     const inactiveLessons = lessonPlan.map(lessons => lessons
-      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)))
       .flatMap(l => l);
 
     expect(activeLessons.length).toEqual(10);
@@ -101,7 +101,7 @@ describe("Schedule Util", () => {
 
     activeLessons
       .forEach((lesson) => {
-        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)!;
+        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)!;
         expect(lesson.isActive).toEqual(true);
         expect(lesson.name).toEqual(testLesson.name);
       });
@@ -117,7 +117,7 @@ describe("Schedule Util", () => {
       const weekday = i % 5;
       lessonPlan[i].forEach((lesson, idx) => {
         expect(lesson.dayCode).toEqual(weekday);
-        expect(lesson.durationCode).toEqual(idx);
+        expect(lesson.lessonCode).toEqual(idx);
         expect(lesson.date).toEqual(currentDate);
       });
 
@@ -135,11 +135,11 @@ describe("Schedule Util", () => {
     lessonPlan.forEach(lessons => expect(lessons.length).toEqual(testSchedule.duration.length));
 
     const activeLessons = lessonPlan.map(lessons => lessons
-      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)))
       .flatMap(l => l);
 
     const inactiveLessons = lessonPlan.map(lessons => lessons
-      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)))
       .flatMap(l => l);
 
     expect(activeLessons.length).toEqual(11);
@@ -147,7 +147,7 @@ describe("Schedule Util", () => {
 
     activeLessons
       .forEach((lesson) => {
-        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)!;
+        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)!;
         expect(lesson.isActive).toEqual(true);
         expect(lesson.name).toEqual(testLesson.name);
       });
@@ -163,7 +163,7 @@ describe("Schedule Util", () => {
       const weekday = (i + 2) % 5;
       lessonPlan[i].forEach((lesson, idx) => {
         expect(lesson.dayCode).toEqual(weekday);
-        expect(lesson.durationCode).toEqual(idx);
+        expect(lesson.lessonCode).toEqual(idx);
         expect(lesson.date).toEqual(currentDate);
       });
 
@@ -181,11 +181,11 @@ describe("Schedule Util", () => {
     lessonPlan.forEach(lessons => expect(lessons.length).toEqual(testSchedule.duration.length));
 
     const activeLessons = lessonPlan.map(lessons => lessons
-      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .filter(lesson => testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)))
       .flatMap(l => l);
 
     const inactiveLessons = lessonPlan.map(lessons => lessons
-      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)))
+      .filter(lesson => !testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)))
       .flatMap(l => l);
 
     expect(activeLessons.length).toEqual(52);
@@ -193,7 +193,7 @@ describe("Schedule Util", () => {
 
     activeLessons
       .forEach((lesson) => {
-        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.durationCode === lesson.durationCode)!;
+        const testLesson = testSchedule.lessons.find(l => l.dayCode === lesson.dayCode && l.lessonCode === lesson.lessonCode)!;
         expect(lesson.isActive).toEqual(true);
         expect(lesson.name).toEqual(testLesson.name);
       });
@@ -209,7 +209,7 @@ describe("Schedule Util", () => {
       const weekday = (i + 4) % 5;
       lessonPlan[i].forEach((lesson, idx) => {
         expect(lesson.dayCode).toEqual(weekday);
-        expect(lesson.durationCode).toEqual(idx);
+        expect(lesson.lessonCode).toEqual(idx);
         expect(lesson.date).toEqual(currentDate);
       });
 

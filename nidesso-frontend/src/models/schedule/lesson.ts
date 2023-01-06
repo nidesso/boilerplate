@@ -2,7 +2,7 @@ export type ScheduleLesson = {
     id?: string;
     name?: string;
     dayCode: number;
-    durationCode: number;
+    lessonCode: number;
 }
 
 export type VacancyLesson = {
